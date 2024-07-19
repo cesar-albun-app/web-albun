@@ -1,10 +1,10 @@
 import React from "react";
-import PhotoUpload from "./components/PhotoUpload";
+import ContainerGallery from "./view/ContainerGallery";
 
 export default function App() {
   return (
    
-      <PhotoUpload />
+     <ContainerGallery/>
 
   );
 }

@@ -1,30 +1,32 @@
-import React, { useState, useEffect } from "react";
-import { Button, Card, Row, Col, ProgressBar, CloseButton } from "react-bootstrap";
+import React, { useState } from "react";
+import {
+  Button,
+  Card,
+  Row,
+  Col,
+  ProgressBar,
+  CloseButton,
+} from "react-bootstrap";
 
-const PhotoGalleryOpener = () => {
-  const [selectedImages, setSelectedImages] = useState([]);
+const PhotoGalleryOpener = ({
+  setSelectedImages,
+  selectedImages,
+  handleClearImages,
+}) => {
   const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const cachedImages = JSON.parse(localStorage.getItem("selectedImages"));
-    if (cachedImages) {
-      setSelectedImages(cachedImages);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("selectedImages", JSON.stringify(selectedImages));
-  }, [selectedImages]);
 
   const handleImageChange = (event) => {
     if (event.target.files) {
       const filesArray = Array.from(event.target.files).slice(0, 10);
       setSelectedImages([]);
       setProgress(0);
-      
+
       filesArray.forEach((file, index) => {
         setTimeout(() => {
-          setSelectedImages((prevImages) => [...prevImages, URL.createObjectURL(file)]);
+          setSelectedImages((prevImages) => [
+            ...prevImages,
+            URL.createObjectURL(file),
+          ]);
           setProgress(((index + 1) / filesArray.length) * 100);
         }, index * 1000); // Simula un retardo de carga
       });
@@ -34,11 +36,6 @@ const PhotoGalleryOpener = () => {
         setProgress(0);
       }, filesArray.length * 1000 + 500);
     }
-  };
-
-  const handleClearImages = () => {
-    setSelectedImages([]);
-    localStorage.removeItem("selectedImages");
   };
 
   const handleRemoveImage = (index) => {
@@ -62,9 +59,9 @@ const PhotoGalleryOpener = () => {
           onClick={() => document.getElementById("fileInput").click()}
           variant="success"
           style={{
-            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
-            backgroundColor: selectedImages.length > 0 ? 'gray' : 'green',
-            borderColor: selectedImages.length > 0 ? 'gray' : 'green'
+            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+            backgroundColor: selectedImages.length > 0 ? "gray" : "green",
+            borderColor: selectedImages.length > 0 ? "gray" : "green",
           }}
           disabled={selectedImages.length > 0}
         >
@@ -74,10 +71,10 @@ const PhotoGalleryOpener = () => {
           onClick={handleClearImages}
           variant="danger"
           style={{
-            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
-            marginLeft: '10px',
-            backgroundColor: selectedImages.length === 0 ? 'gray' : 'red',
-            borderColor: selectedImages.length === 0 ? 'gray' : 'red'
+            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+            marginLeft: "10px",
+            backgroundColor: selectedImages.length === 0 ? "gray" : "red",
+            borderColor: selectedImages.length === 0 ? "gray" : "red",
           }}
           disabled={selectedImages.length === 0}
         >
@@ -95,20 +92,33 @@ const PhotoGalleryOpener = () => {
 
       {selectedImages.length > 0 && (
         <div className="mt-4">
-          <h3 style={{ color: '#8A2BE2' }}>Imágenes seleccionadas:</h3>
+          <h3
+            style={{ color: "black", fontSize: "20px", marginBottom: "10px" }}
+          >
+            Imágenes seleccionadas:
+          </h3>
           <Row className="justify-content-center">
             {selectedImages.map((image, index) => (
               <Col md={6} lg={4} className="mb-3" key={index}>
-                <Card style={{ position: 'relative' }}>
+                <Card style={{ position: "relative" }}>
                   <CloseButton
-                    style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1 }}
+                    style={{
+                      position: "absolute",
+                      top: "10px",
+                      right: "10px",
+                      zIndex: 1,
+                    }}
                     onClick={() => handleRemoveImage(index)}
                   />
                   <Card.Img
                     variant="top"
                     src={image}
                     alt={`Seleccionada ${index + 1}`}
-                    style={{ width: '100%', height: '200px', objectFit: 'cover' }}
+                    style={{
+                      width: "100%",
+                      height: "200px",
+                      objectFit: "cover",
+                    }}
                   />
                 </Card>
               </Col>
