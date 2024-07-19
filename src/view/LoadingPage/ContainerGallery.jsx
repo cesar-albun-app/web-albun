@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import UpdateDb from "../components/UpdateDb";
-import PhotoUpload from "../components/PhotoUpload";
-import PhotoGalleryOpener from "../view/PhotoGalleryOpener";
+import UpdateDb from "../../components/UpdateDb";
+import PhotoUpload from "../../components/PhotoUpload";
+import PhotoGalleryOpener from "../LoadingPage/PhotoGalleryOpener";
 
 export default function ContainerGallery() {
   const [selectedImages, setSelectedImages] = useState([]);

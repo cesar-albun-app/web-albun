@@ -102,12 +102,23 @@ const PhotoGalleryOpener = ({
               <Col md={6} lg={4} className="mb-3" key={index}>
                 <Card style={{ position: "relative" }}>
                   <CloseButton
-                    style={{
-                      position: "absolute",
-                      top: "10px",
-                      right: "10px",
-                      zIndex: 1,
-                    }}
+                  
+                  style={{
+                    position: "absolute",
+                    top: "10px",
+                    right: "10px",
+                    zIndex: 1,
+                    backgroundColor: "white", // Red background color
+                    color: "white", // White color for the "X"
+                    border: "none", // Optional: remove border if any
+                    borderRadius: "50%", // Optional: make it circular
+                    width: "30px", // Optional: set a fixed width
+                    height: "30px", // Optional: set a fixed height
+                    display: "flex", // Optional: to center the "X"
+                    alignItems: "center", // Optional: to center the "X"
+                    justifyContent: "center", // Optional: to center the "X"
+                    cursor: "pointer", // Optional: change cursor to pointer
+                  }}
                     onClick={() => handleRemoveImage(index)}
                   />
                   <Card.Img

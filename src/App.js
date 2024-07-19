@@ -1,10 +1,12 @@
 import React from "react";
-import ContainerGallery from "./view/ContainerGallery";
+import RouterPage from "./routes/RouterPage";
 
 export default function App() {
   return (
    
-     <ContainerGallery/>
+     <RouterPage/>
+
+     
 
   );
 }
