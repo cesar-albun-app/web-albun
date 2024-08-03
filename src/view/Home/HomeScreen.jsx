@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { db, storage } from "../../firebase"; // Make sure storage is properly initialized in your firebase.js file
 import { collection, getDocs, doc, updateDoc, arrayRemove } from "firebase/firestore";
 import { ref, deleteObject } from "firebase/storage"; // Import necessary functions from Firebase Storage
-import { Card, Container, Row, Col, Spinner, Button } from 'react-bootstrap';
+import { Card, Container, Row, Col, Spinner, Button, Form } from 'react-bootstrap';
 import { FaTrash, FaShareAlt, FaSearchPlus, FaDownload } from 'react-icons/fa'; // Importing Font Awesome icons
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ModalCustoms from '../../components/ModalCustoms'; // Import the new component
@@ -10,10 +10,11 @@ import ModalCustoms from '../../components/ModalCustoms'; // Import the new comp
 export default function HomeScreen() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [count, setCount] = useState(0);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,32 +25,16 @@ export default function HomeScreen() {
           ...doc.data(),
         }));
         setItems(data);
+        setLoading(false);
       } catch (e) {
         console.error("Error fetching documents: ", e);
         setError("Error fetching data from the database.");
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
-
-  useEffect(() => {
-    if (loading) {
-      const interval = setInterval(() => {
-        setCount((prevCount) => {
-          if (prevCount < 5) {
-            return prevCount + 1;
-          } else {
-            clearInterval(interval);
-            setLoading(false);
-            return prevCount;
-          }
-        });
-      }, 1000);
-
-      return () => clearInterval(interval);
-    }
-  }, [loading]);
 
   const handleRemoveImage = async () => {
     if (selectedItem) {
@@ -108,7 +93,6 @@ export default function HomeScreen() {
   };
 
   const handleZoomLoadImage = (image) => {
-    // Implement the download functionality here
     const link = document.createElement('a');
     link.href = image;
     link.download = 'download.jpg';
@@ -118,10 +102,30 @@ export default function HomeScreen() {
   };
 
   const handleDownloadImage = (image) => {
-    // Implement the download functionality here
-   ;
+    const link = document.createElement('a');
+    link.href = image;
+    link.download = 'download.jpg';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
+  const handlePageSizeChange = (e) => {
+    setPageSize(parseInt(e.target.value, 10));
+    setCurrentPage(1); // Reset to the first page
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => (prevPage * pageSize < items.length ? prevPage + 1 : prevPage));
+  };
+
+  const indexOfLastItem = currentPage * pageSize;
+  const indexOfFirstItem = indexOfLastItem - pageSize;
+  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <Container>
@@ -129,49 +133,48 @@ export default function HomeScreen() {
         <div className="d-flex flex-column justify-content-center align-items-center vh-100">
           <Spinner animation="border" role="status" style={{ width: '5rem', height: '5rem' }}>
           </Spinner>
-          <h2>{count}</h2>
         </div>
       ) : error ? (
         <p>{error}</p>
       ) : (
         <>
-          <h1>Fotos</h1>
           <Row>
-            {items.flatMap((item) =>
+            {currentItems.flatMap((item) =>
               item.images.map((image, index) => (
                 <Col key={`${item.id}-${index}`} md={4} className="mb-4">
                   <Card>
                     <Card.Img variant="top" src={image} alt={`Image ${index}`} />
                     <Card.Body>
-                      <Card.Title className="d-flex justify-content-between align-items-center">
-                        <span>{item.name} {item.surname}</span>
+                      <Card.Title className="d-flex flex-column align-items-center">
+                        <div className="text-center mb-2" style={{ wordWrap: 'break-word', maxWidth: '100%' }}>
+                          <span>{item.name} {item.surname}</span>
+                        </div>
                         <div>
-                          <Button
+                          <Button 
                             variant="danger"
                             onClick={() => handleShowModal(item.id, image)}
-                            style={{ marginLeft: '2px', marginRight: '2px' }}
+                            className="mx-1"
                           >
                             <FaTrash />
                           </Button>
                           <Button
                             variant="primary"
                             onClick={() => handleShareImage(image)}
-                            style={{ marginLeft: '2px', marginRight: '2px' }}
+                            className="mx-1"
                           >
                             <FaShareAlt />
                           </Button>
                           <Button
                             variant="success"
                             onClick={() => handleZoomLoadImage(image)}
-                            style={{ marginLeft: '2px', marginRight: '2px' }}
+                            className="mx-1"
                           >
                             <FaSearchPlus />
                           </Button>
-                          
                           <Button
-                            variant="success"
+                            variant="primary"
                             onClick={() => handleDownloadImage(image)}
-                            style={{ marginLeft: '2px', marginRight: '2px' }}
+                            className="mx-1"
                           >
                             <FaDownload />
                           </Button>
@@ -183,10 +186,21 @@ export default function HomeScreen() {
               ))
             )}
           </Row>
+          <div className="d-flex justify-content-between align-items-center mt-4">
+            <Button onClick={handlePreviousPage} disabled={currentPage === 1}>Previous</Button>
+            <Form.Group controlId="pageSize" className="mb-0 d-flex align-items-center">
+              <Form.Control as="select" value={pageSize} onChange={handlePageSizeChange}>
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+              </Form.Control>
+            </Form.Group>
+            <Button onClick={handleNextPage} disabled={indexOfLastItem >= items.length}>Next</Button>
+          </div>
         </>
       )}
 
-      {/* Modal for delete confirmation */}
       <ModalCustoms
         show={showModal}
         handleClose={handleCloseModal}

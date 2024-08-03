@@ -4,6 +4,18 @@ import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { Form, Button, Alert, Container, Spinner } from "react-bootstrap";
 
+
+
+  const containerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+   
+  };
+
+
+
+
 const UpdateDb = ({ selectedImages, handleClearImages }) => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -41,7 +53,7 @@ const UpdateDb = ({ selectedImages, handleClearImages }) => {
   const handleAddItem = async (e) => {
     e.preventDefault();
     if (name.trim() === "" || surname.trim() === "") {
-      setError("Please enter both name and surname.");
+      setError("Ingrese nombre y Déjame un mensaje ");
       return;
     }
 
@@ -85,7 +97,14 @@ const UpdateDb = ({ selectedImages, handleClearImages }) => {
   return (
     <Container>
       {error && <Alert variant="danger">{error}</Alert>}
-      {success && <Alert variant="success">Enviado con éxito!</Alert>}
+      {success && <Alert variant="success">
+
+        <div style={containerStyle}>
+
+        Enviado con éxito. ¡Gracias por colaborar!  no hay plata para el fotógrafo.
+          </div>
+        
+        </Alert>}
 
       {selectedImages.length > 0 && (
         <div
@@ -109,16 +128,16 @@ const UpdateDb = ({ selectedImages, handleClearImages }) => {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Apellido</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Apellido"
-                value={surname}
-                onChange={(e) => setSurname(e.target.value)}
-                className="form-control-sm"
-                style={{ maxWidth: "500px" }} // Set the maximum width of the input field
-              />
-            </Form.Group>
+      <Form.Label>Déjame un mensaje</Form.Label>
+      <Form.Control
+        as="textarea"
+        placeholder="Mensaje"
+        value={surname}
+        onChange={(e) => setSurname(e.target.value)}
+        className="form-control-sm"
+        style={{ maxWidth: '500px' }} // Set the maximum width of the input field
+      />
+    </Form.Group> 
             <Button
               type="submit"
               variant="primary"

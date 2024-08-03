@@ -16,8 +16,6 @@ function PhotoUpload(props) {
                   marginBottom: "10px",
                 }}
               >
-                Bienvenidos, muchas gracias por colaborar. No hay plata para el
-                fotógrafo.
               </Card.Title>
               {props.children}
             </Card.Body>
