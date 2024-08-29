@@ -122,14 +122,9 @@ const PhotoGalleryOpener = ({
                     onClick={() => handleRemoveImage(index)}
                   />
                   <Card.Img
-                    variant="top"
                     src={image}
                     alt={`Seleccionada ${index + 1}`}
-                    style={{
-                      width: "100%",
-                      height: "200px",
-                      objectFit: "cover",
-                    }}
+                    
                   />
                 </Card>
               </Col>

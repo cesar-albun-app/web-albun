@@ -6,6 +6,9 @@ import HomeScreen from '../view/Home/HomeScreen';
 import Dashboard from '../view/Dashboard/Dashboard';
 import DynamicCards from '../view/DynamicCards/DynamicCards';
 import NotFound from '../view/NotFound/NotFound';
+import FinancesScreen from '../view/Finanzas/FinancesScreen';
+
+
 
 import Login from '../view/Auth/Login';
 import { AuthProvider } from '../contexts/AuthContext';
@@ -21,6 +24,7 @@ function RouterPage() {
           <Route exact path="/home" element={<PrivateRoute><HomeScreen /></PrivateRoute>} />
           <Route exact path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route exact path="/dynamicCards" element={<PrivateRoute><DynamicCards /></PrivateRoute>} />
+          <Route exact path="/FinancesScreen" element={<PrivateRoute><FinancesScreen /></PrivateRoute>} />
           <Route path="*" element={<NotFound />} />
 
         </Routes>

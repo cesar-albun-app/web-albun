@@ -1,86 +1,43 @@
-// Dashboard.js
 import React from 'react';
-import { Card, Button, Container, Row, Col, ProgressBar } from 'react-bootstrap';
+import { Card, Button, Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 function Dashboard() {
   return (
     <Container fluid className="p-4" style={{ backgroundColor: '#f8f9fa', height: '100vh' }}>
-      <Row>
-        <Col md={4} className="mb-4">
-          <Card className="h-100">
-            <Card.Body>
-              <h5>Bienvenido</h5>
-              <p>Tu albun de fotos</p>
+      <Row className="h-100">
+        <Col md={3} className="mb-4">
+          <Card className="h-100" style={{ backgroundColor: '#007bff', color: 'white' }}>
+            <Card.Body className="d-flex flex-column justify-content-center align-items-center">
+              <h6>Home</h6>
+              <Button variant="light" as={Link} to="/home">Home</Button>
             </Card.Body>
           </Card>
         </Col>
-        <Col md={8} className="mb-4">
-          <Row>
-            <Col md={4} className="mb-4">
-              <Card className="h-100">
-                <Card.Body>
-                  <h6>Likes</h6>
-                  <h4>26,789</h4>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col md={4} className="mb-4">
-              <Card className="h-100">
-                <Card.Body>
-                  <h6>Love</h6>
-                  <h4>6,754</h4>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col md={4} className="mb-4">
-              <Card className="h-100">
-                <Card.Body>
-                  <h6>Smiles</h6>
-                  <h4>52,789</h4>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={8} className="mb-4">
-              <Card className="h-100">
-                <Card.Body>
-                  <h6>Fotos</h6>
-                  <h4>1234</h4>
-                  <div style={{ height: '200px', backgroundColor: '#f1f3f4' }}>
-                    {/* Aquí podrías insertar un gráfico usando una librería como Chart.js */}
-                  </div>
-                  <Button as={Link} to="/home" variant="primary" className="mt-3">Ver mi home</Button>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col md={4} className="mb-4">
-              <Card className="h-100">
-                <Card.Body>
-                  <h6>Targets</h6>
-                  <p>Views</p>
-                  <ProgressBar now={75} label={`${75}%`} />
-                  <p>Followers</p>
-                  <ProgressBar now={50} label={`${50}%`} />
-                  <p>Income</p>
-                  <ProgressBar now={25} label={`${25}%`} />
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={4} className="mb-4">
-          <Card className="h-100 bg-primary text-white">
-            <Card.Body>
-              <h6>Agregar Mas carpetas</h6>
-              <Button variant="light" as={Link} to="/DynamicCards">Ir a Crear carpetas</Button>
+        <Col md={3} className="mb-4">
+          <Card className="h-100" style={{ backgroundColor: '#28a745', color: 'white' }}>
+            <Card.Body className="d-flex flex-column justify-content-center align-items-center">
+              <h6>Finanzas</h6>
+              <Button variant="light" as={Link} to="/FinancesScreen">Finanzas</Button>
             </Card.Body>
           </Card>
         </Col>
-       
+        <Col md={3} className="mb-4">
+          <Card className="h-100" style={{ backgroundColor: '#ffc107', color: 'white' }}>
+            <Card.Body className="d-flex flex-column justify-content-center align-items-center">
+              <h6>Menú</h6>
+              <Button variant="light" as={Link} to="/menu">Menú</Button>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col md={3} className="mb-4">
+          <Card className="h-100" style={{ backgroundColor: '#dc3545', color: 'white' }}>
+            <Card.Body className="d-flex flex-column justify-content-center align-items-center">
+              <h6>Carpetas</h6>
+              <Button variant="light" as={Link} to="/DynamicCards">Carpetas</Button>
+            </Card.Body>
+          </Card>
+        </Col>
       </Row>
     </Container>
   );
