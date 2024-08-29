@@ -7,6 +7,10 @@ import Dashboard from '../view/Dashboard/Dashboard';
 import DynamicCards from '../view/DynamicCards/DynamicCards';
 import NotFound from '../view/NotFound/NotFound';
 import FinancesScreen from '../view/Finanzas/FinancesScreen';
+import FinancesYearGrapy from '../view/Finanzas/FinancesYearGrapy';
+import TripsScreen from '../view/Trips/TripsScreen';
+
+
 
 
 
@@ -25,6 +29,10 @@ function RouterPage() {
           <Route exact path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route exact path="/dynamicCards" element={<PrivateRoute><DynamicCards /></PrivateRoute>} />
           <Route exact path="/FinancesScreen" element={<PrivateRoute><FinancesScreen /></PrivateRoute>} />
+          <Route exact path="/FinancesYearGrapy" element={<PrivateRoute><FinancesYearGrapy /></PrivateRoute>} />
+          <Route exact path="/TripsScreen" element={<PrivateRoute><TripsScreen /></PrivateRoute>} />
+          
+
           <Route path="*" element={<NotFound />} />
 
         </Routes>
