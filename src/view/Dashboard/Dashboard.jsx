@@ -48,13 +48,27 @@ function Dashboard() {
             style={{ backgroundColor: "#ffc107", color: "white" }}
           >
             <Card.Body className="d-flex flex-column justify-content-center align-items-center">
-              <h6>Menú</h6>
-              <Button variant="light" as={Link} to="/menu">
-                Menú
+              <h6>Carga Imagenes Dubia</h6>
+              <Button variant="light" as={Link} to="/dubiaScreem">
+                Cargar
               </Button>
             </Card.Body>
           </Card>
         </Col>
+        <Col md={3} className="mb-4">
+          <Card
+            className="h-100"
+            style={{ backgroundColor: "#9188c2", color: "white" }}
+          >
+            <Card.Body className="d-flex flex-column justify-content-center align-items-center">
+              <h6>Carga Imagenes Karla</h6>
+              <Button variant="light" as={Link} to="/karlaScreem">
+                Cargar
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+
         <Col md={3} className="mb-4">
           <Card
             className="h-100"

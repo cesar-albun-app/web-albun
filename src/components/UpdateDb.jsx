@@ -14,8 +14,6 @@ import { Form, Button, Alert, Container, Spinner } from "react-bootstrap";
   };
 
 
-
-
 const UpdateDb = ({ selectedImages, handleClearImages }) => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
