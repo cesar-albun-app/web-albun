@@ -10,7 +10,7 @@ import {
 
 const PhotoGalleryOpener = ({
   setSelectedImages,
-  selectedImages,
+  selectedImages = [], // Asegura que siempre sea un array por defecto
   handleClearImages,
 }) => {
   const [progress, setProgress] = useState(0);
@@ -39,7 +39,9 @@ const PhotoGalleryOpener = ({
   };
 
   const handleRemoveImage = (index) => {
-    const updatedImages = selectedImages.filter((_, i) => i !== index);
+    const updatedImages = Array.isArray(selectedImages)
+      ? selectedImages.filter((_, i) => i !== index)
+      : [];
     setSelectedImages(updatedImages);
   };
 
@@ -60,10 +62,10 @@ const PhotoGalleryOpener = ({
           variant="success"
           style={{
             boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-            backgroundColor: selectedImages.length > 0 ? "gray" : "green",
-            borderColor: selectedImages.length > 0 ? "gray" : "green",
+            backgroundColor: Array.isArray(selectedImages) && selectedImages.length > 0 ? "gray" : "green",
+            borderColor: Array.isArray(selectedImages) && selectedImages.length > 0 ? "gray" : "green",
           }}
-          disabled={selectedImages.length > 0}
+          disabled={Array.isArray(selectedImages) && selectedImages.length > 0}
         >
           Agregar
         </Button>
@@ -73,10 +75,10 @@ const PhotoGalleryOpener = ({
           style={{
             boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
             marginLeft: "10px",
-            backgroundColor: selectedImages.length === 0 ? "gray" : "red",
-            borderColor: selectedImages.length === 0 ? "gray" : "red",
+            backgroundColor: !Array.isArray(selectedImages) || selectedImages.length === 0 ? "gray" : "red",
+            borderColor: !Array.isArray(selectedImages) || selectedImages.length === 0 ? "gray" : "red",
           }}
-          disabled={selectedImages.length === 0}
+          disabled={!Array.isArray(selectedImages) || selectedImages.length === 0}
         >
           Borrar
         </Button>
@@ -90,7 +92,7 @@ const PhotoGalleryOpener = ({
         />
       )}
 
-      {selectedImages.length > 0 && (
+      {Array.isArray(selectedImages) && selectedImages.length > 0 && (
         <div className="mt-4">
           <h3
             style={{ color: "black", fontSize: "20px", marginBottom: "10px" }}
@@ -102,30 +104,17 @@ const PhotoGalleryOpener = ({
               <Col md={6} lg={4} className="mb-3" key={index}>
                 <Card style={{ position: "relative" }}>
                   <CloseButton
-                  
-                  style={{
-                    position: "absolute",
-                    top: "10px",
-                    right: "10px",
-                    zIndex: 1,
-                    backgroundColor: "white", // Red background color
-                    color: "white", // White color for the "X"
-                    border: "none", // Optional: remove border if any
-                    borderRadius: "50%", // Optional: make it circular
-                    width: "30px", // Optional: set a fixed width
-                    height: "30px", // Optional: set a fixed height
-                    display: "flex", // Optional: to center the "X"
-                    alignItems: "center", // Optional: to center the "X"
-                    justifyContent: "center", // Optional: to center the "X"
-                    cursor: "pointer", // Optional: change cursor to pointer
-                  }}
+                    style={{
+                      position: "absolute",
+                      top: "10px",
+                      right: "10px",
+                      zIndex: 1,
+                      backgroundColor: "white",
+                      cursor: "pointer",
+                    }}
                     onClick={() => handleRemoveImage(index)}
                   />
-                  <Card.Img
-                    src={image}
-                    alt={`Seleccionada ${index + 1}`}
-                    
-                  />
+                  <Card.Img src={image} alt={`Seleccionada ${index + 1}`} />
                 </Card>
               </Col>
             ))}
