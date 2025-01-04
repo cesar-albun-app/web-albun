@@ -11,9 +11,8 @@ const MobileProductScreen = () => {
   const [cart, setCart] = useState([]);
   const [activePed, setActivePed] = useState(false);
 
-  const categories = ["All", "Poduct", "Trata", "Promotions"];
+  const categories = [ "Poduct", "Trata", "Promotions"];
   const categoryTranslations = {
-    All: "Todos",
     Poduct: "Productos",
     Trata: "Tratamientos",
     Promotions: "Promociones",
@@ -21,10 +20,10 @@ const MobileProductScreen = () => {
 
 
 
-  const [filteredCategory, setFilteredCategory] = useState("All");
+  const [filteredCategory, setFilteredCategory] = useState("Poduct");
 
   const filteredProducts =
-    filteredCategory === "All"
+    filteredCategory === "Poduct"
       ? products
       : products.filter((product) => product.category === filteredCategory);
 
@@ -182,7 +181,7 @@ const MobileProductScreen = () => {
             }}
           >
             <Container className="pt-4">
-              <h2 className="text-center mb-4">Productos</h2>
+              <h2 className="text-center mb-4">{categoryTranslations[filteredCategory] }</h2>
               <Row>
                 {filteredProducts.map((product) => (
                   <Col xs={12} key={product.id} className="mb-3">

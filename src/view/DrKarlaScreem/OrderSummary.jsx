@@ -27,7 +27,7 @@ const OrderSummary = ({ cart, handleIncrement, handleDecrement, goBack, setCart}
   // Función para enviar mensaje a WhatsApp
   const sendToWhatsApp = () => {
     const message = encodeURIComponent(generateWhatsAppMessage());
-    const whatsappNumber = "5491173625934"; // Reemplaza con el número de WhatsApp
+    const whatsappNumber = "5491127713397"; // Reemplaza con el número de WhatsApp
     const whatsappLink = `https://wa.me/${whatsappNumber}?text=${message}`;
     window.open(whatsappLink, "_blank");
 
