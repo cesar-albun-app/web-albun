@@ -1,9 +1,40 @@
 import React from "react";
-import { Card, Button, Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import {  Card, Button, Container, Row, Col, Navbar, Nav  } from "react-bootstrap";
+import { Link ,useNavigate} from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+
 
 function Dashboard() {
+
+
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/"); // Redirige al inicio de sesión después de cerrar sesión
+    } catch (error) {
+      console.error("Error al cerrar sesión: ", error);
+    }
+  };
+
+
   return (
+
+    <>
+{/* Header */}
+<Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
+<Container fluid>
+  <Navbar.Brand as={Link} to="/dashboard">Dashboard</Navbar.Brand>
+  <Nav className="ms-auto">
+    <Button variant="outline-light" onClick={handleLogout}>
+      Cerrar Sesión
+    </Button>
+  </Nav>
+</Container>
+</Navbar>
+
     <Container
       fluid
       className="p-4"
@@ -97,6 +128,7 @@ function Dashboard() {
         </Col>
       </Row>
     </Container>
+    </>
   );
 }
 
