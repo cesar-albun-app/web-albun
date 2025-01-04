@@ -4,6 +4,9 @@ import PhotoUpload from "../../components/PhotoUpload";
 import PhotoGalleryOpener from "../LoadingPage/PhotoGalleryOpener";
 
 import ViewGallery from './ViewGallery'
+import ImportMasivo from './ImportMasivo'
+
+
 export default function UpdateImagesDubia() {
  // Estado para la pestaña activa
   const [activeTab, setActiveTab] = useState("addImage"); // 'addImage' o 'viewProducts'
@@ -68,6 +71,21 @@ export default function UpdateImagesDubia() {
         >
           Ver
         </button>
+        <button
+          onClick={() => setActiveTab("viewMaxi")}
+          style={{
+            padding: "10px 20px",
+            border: "none",
+            borderBottom:
+              activeTab === "viewMaxi" ? "2px solid #4A90E2" : "none",
+            backgroundColor: "transparent",
+            fontWeight: "bold",
+            color: activeTab === "viewMaxi" ? "#4A90E2" : "#555",
+            cursor: "pointer",
+          }}
+        >
+          Importar excel
+        </button>
       </div>
 
       {/* Contenido de la Pestaña Activa */}
@@ -112,6 +130,22 @@ export default function UpdateImagesDubia() {
             Ver Productos
           </h2>
           <ViewGallery />
+        </PhotoUpload>
+      )}
+      {activeTab === "viewMaxi" && (
+        <PhotoUpload>
+          <h2
+            style={{
+              textAlign: "center",
+              fontSize: "2em",
+              color: "#4A90E2",
+              marginTop: "20px",
+              fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+            }}
+          >
+            Importar Maxivo
+          </h2>
+          <ImportMasivo />
         </PhotoUpload>
       )}
     </div>

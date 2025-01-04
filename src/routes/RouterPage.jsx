@@ -15,6 +15,7 @@ import UpdateImagesKarla from '../view/DrKarlaScreem/UpdateImagesKarla';
 
 import MobileProductScreen from '../view/DubiaScreem/MobileProductScreen';
 import MobileProductKarlaScreen from '../view/DrKarlaScreem/MobileProductScreen';
+import AppointmentScheduler from '../view/DrKarlaScreem/Appointment/AppointmentScheduler';
 
 
 import Login from '../view/Auth/Login';
@@ -41,6 +42,8 @@ function RouterPage() {
           
           <Route exact path="/docKarla" element={<MobileProductKarlaScreen />} />
           <Route exact path="/karlaScreem" element={<PrivateRoute><UpdateImagesKarla /></PrivateRoute>} />
+          <Route exact path="/appointmentScheduler" element={<PrivateRoute><AppointmentScheduler /></PrivateRoute>} />
+
 
 
         
