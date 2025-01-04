@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase"; // Asegúrate de que el archivo firebase.js esté configurado
 import { collection, getDocs } from "firebase/firestore";
-import { Card, Button, Container, Row, Col, Spinner } from "react-bootstrap";
+import { Card, Button, Container, Row, Col, Spinner ,Modal} from "react-bootstrap";
 import OrderSummary from "./OrderSummary";
 
 const MobileProductScreen = () => {
@@ -10,6 +10,8 @@ const MobileProductScreen = () => {
   const [quantities, setQuantities] = useState({});
   const [cart, setCart] = useState([]);
   const [activePed, setActivePed] = useState(false);
+  const [showModal, setShowModal] = useState(false); // Estado para el modal
+  const [modalImage, setModalImage] = useState(""); 
 
   const categories = [ "Poduct", "Trata", "Promotions"];
   const categoryTranslations = {
@@ -52,6 +54,16 @@ const MobileProductScreen = () => {
 
     fetchProducts();
   }, []);
+
+  const handleImageClick = (image) => {
+    setModalImage(image);
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setModalImage("");
+  };
+
 
   const handleIncrement = (productId) => {
     const product = products.find((p) => p.id === productId);
@@ -151,6 +163,18 @@ const MobileProductScreen = () => {
               boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
             }}
           >
+
+<Modal show={showModal} onHide={handleCloseModal} centered>
+            <Modal.Body className="p-0">
+              <img
+                src={modalImage}
+                alt="Producto"
+                style={{ width: "100%", height: "auto", display: "block" }}
+              />
+            </Modal.Body>
+          </Modal>
+
+
             {categories.map((category) => (
               <button
                 key={category}
@@ -218,18 +242,33 @@ const MobileProductScreen = () => {
                               {quantities[product.id]}
                             </span>
                           )}
-                          <Card.Img
-                            src={
-                              product.images?.[0] ||
-                              "https://via.placeholder.com/150"
-                            }
-                            alt={product.productName}
-                            style={{
-                              width: "100%",
-                              height: "90px",
-                              objectFit: "cover",
-                            }}
-                          />
+                          <Col xs={20} style={{ position: "relative" }}>
+                        <span
+                          onClick={() => handleImageClick(product.images?.[0] || "https://via.placeholder.com/150")}
+                          style={{
+                            position: "absolute",
+                            top: "5px",
+                            right: "5px",
+                            backgroundColor: "rgba(0, 0, 0, 0.5)",
+                            color: "#fff",
+                            borderRadius: "50%",
+                            width: "30px",
+                            height: "30px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            cursor: "pointer",
+                            zIndex: 10,
+                          }}
+                        >
+                          🔍
+                        </span>
+                        <Card.Img
+                          src={product.images?.[0] || "https://via.placeholder.com/150"}
+                          alt={product.productName}
+                          style={{ width: "100%", objectFit: "cover" }}
+                        />
+                      </Col>
                         </Col>
                         <Col xs={8}>
                           <Card.Body style={{ padding: "10px" }}>

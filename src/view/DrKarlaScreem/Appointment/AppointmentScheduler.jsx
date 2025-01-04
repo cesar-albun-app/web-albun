@@ -132,8 +132,8 @@ const AppointmentScheduler = () => {
       .toDate()
       .toLocaleDateString()} a las ${appointment.dateTime
       .toDate()
-      .toLocaleTimeString()}. Por favor, contáctenos si necesita más información.`;
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+      .toLocaleTimeString()}. Confirmaremos su turno 24 horas antes de la cita. Por favor, no dude en contactarnos si tiene alguna consulta.`
+      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
   };
 
