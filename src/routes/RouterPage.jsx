@@ -17,7 +17,7 @@ import MobileProductScreen from '../view/DubiaScreem/MobileProductScreen';
 import MobileProductKarlaScreen from '../view/DrKarlaScreem/MobileProductScreen';
 import AppointmentScheduler from '../view/DrKarlaScreem/Appointment/AppointmentScheduler';
 import Scheduler from '../view/DrKarlaScreem/Appointment/Scheduler';
-
+import Register from '../view/Auth/Register'
 
 
 import Login from '../view/Auth/Login';
@@ -30,6 +30,8 @@ function RouterPage() {
       <AuthProvider>
         <Routes>
         <Route exact path="/" element={<Login />} />
+        <Route exact path="/register" element={<Register />} />
+
           <Route exact path="/gordiboda" element={<ContainerGallery />} />
           
            <Route exact path="/home" element={<PrivateRoute><HomeScreen /></PrivateRoute>} />

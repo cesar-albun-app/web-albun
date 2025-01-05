@@ -29,6 +29,7 @@ const AppointmentScheduler = () => {
     lastName: "",
     treatment: "",
     phone: "",
+    cost: "", // Nuevo campo para el costo
     isNewPatient: false,
     dateTime: null,
   });
@@ -59,7 +60,8 @@ const AppointmentScheduler = () => {
       !formData.firstName ||
       !formData.lastName ||
       !formData.phone ||
-      !formData.dateTime
+      !formData.dateTime ||
+      !formData.cost
     ) {
       alert("Todos los campos son obligatorios.");
       return;
@@ -88,6 +90,7 @@ const AppointmentScheduler = () => {
         lastName: "",
         treatment: "",
         phone: "",
+        cost: "",
         isNewPatient: false,
         dateTime: null,
       });
@@ -107,6 +110,7 @@ const AppointmentScheduler = () => {
       lastName: appointment.lastName,
       treatment: appointment.treatment,
       phone: appointment.phone,
+      cost: appointment.cost,
       isNewPatient: appointment.isNewPatient,
       dateTime: appointment.dateTime.toDate(),
     });
@@ -128,12 +132,12 @@ const AppointmentScheduler = () => {
 
   const handleSendWhatsApp = (appointment) => {
     const phone = `549${appointment.phone}`;
-    const message = `Hola ${appointment.firstName} ${appointment.lastName}, su cita para el tratamiento "${appointment.treatment}" está programada para el día ${appointment.dateTime
+    const message = `Hola ${appointment.firstName} ${appointment.lastName}, su cita para el tratamiento con la Dra Karla Leañez "${appointment.treatment}" está programada para el día ${appointment.dateTime
       .toDate()
       .toLocaleDateString()} a las ${appointment.dateTime
       .toDate()
-      .toLocaleTimeString()}. Confirmaremos su turno 24 horas antes de la cita. Por favor, no dude en contactarnos si tiene alguna consulta.`
-      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+      .toLocaleTimeString()}. El costo del tratamiento es de ${appointment.cost}. Confirmaremos su turno 24 horas antes de la cita. Por favor, no dude en contactarnos si tiene alguna consulta. Nos vemos en Conesa 3074 planta baja apt A.`;
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
   };
 
@@ -232,6 +236,17 @@ const AppointmentScheduler = () => {
           </Col>
           <Col xs={12} sm={6}>
             <Form.Group>
+              <Form.Label>Costo</Form.Label>
+              <Form.Control
+                type="text"
+                name="cost"
+                value={formData.cost}
+                onChange={handleChange}
+              />
+            </Form.Group>
+          </Col>
+          <Col xs={12} sm={6}>
+            <Form.Group>
               <Form.Label>Fecha y Hora</Form.Label>
               <DatePicker
                 selected={formData.dateTime}
@@ -279,6 +294,7 @@ const AppointmentScheduler = () => {
                 <th>Apellido</th>
                 <th>Teléfono</th>
                 <th>Tratamiento</th>
+                <th>Costo</th>
                 <th>Paciente</th>
                 <th>Fecha</th>
                 <th>Hora</th>
@@ -294,6 +310,7 @@ const AppointmentScheduler = () => {
                     <td>{appointment.lastName}</td>
                     <td>{appointment.phone}</td>
                     <td>{appointment.treatment}</td>
+                    <td>{appointment.cost}</td>
                     <td>{appointment.isNewPatient ? "Nuevo" : "Regular"}</td>
                     <td>{date.toLocaleDateString()}</td>
                     <td>{date.toLocaleTimeString()}</td>
