@@ -1,29 +1,29 @@
-// src/components/Login.js
 import React, { useState } from "react";
-import { Form, Button, Container, Row, Col, Alert, Card } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Alert, Card, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // Estado para manejar el spinner
   const navigate = useNavigate();
   const { login } = useAuth();
-
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true); // Mostrar el spinner
 
     try {
       await login(email, password);
       navigate("/dashboard");
-   
     } catch (error) {
       console.log("error: ", error);
       setError("Error debes agregar email y password");
+    } finally {
+      setLoading(false); // Ocultar el spinner
     }
   };
 
@@ -57,8 +57,21 @@ function Login() {
                 </Form.Group>
 
                 <div className="d-grid">
-                  <Button variant="primary" type="submit" size="lg">
-                    Login
+                  <Button variant="primary" type="submit" size="lg" disabled={loading}>
+                    {loading ? (
+                      <>
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        />{" "}
+                        Ingresando...
+                      </>
+                    ) : (
+                      "Login"
+                    )}
                   </Button>
                 </div>
               </Form>

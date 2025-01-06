@@ -21,6 +21,8 @@ const RegisterForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(""); // Estado para el mensaje de error
   const [domainError, setDomainError] = useState(""); // Error para el dominio
+  const [phoneError, setPhoneError] = useState(""); // Estado para el error del teléfono
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -52,10 +54,27 @@ const RegisterForm = () => {
     return true;
   };
 
+  const validatePhone = () => {
+    const phoneRegex = /^549\d{6,}$/; // Validar que comience con 549 y tenga al menos 6 dígitos adicionales
+    if (!formData.phone) {
+      setPhoneError("El teléfono no puede estar vacío.");
+      return false;
+    }
+    if (!phoneRegex.test(formData.phone)) {
+      setPhoneError(
+        "El teléfono debe comenzar con el código 549 seguido de al menos 6 dígitos adicionales."
+      );
+      return false;
+    }
+    setPhoneError("");
+    return true;
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(""); // Limpiar errores anteriores
-    if (!validateDomain()) return; // Validar dominio antes de continuar
+    if (!validatePhone() || !validateDomain()) return; // Validar teléfono y dominio antes de continuar
 
     setLoading(true);
 
@@ -92,7 +111,7 @@ const RegisterForm = () => {
       });
 
       alert("Registro exitoso.");
-      navigate("/"); // Redirige al dashboard o donde desees
+      navigate("/Login"); // Redirige al dashboard o donde desees
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         setError("El correo electrónico ya está registrado.");
@@ -151,13 +170,14 @@ const RegisterForm = () => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  placeholder="Ingresa tu teléfono"
+                  placeholder="Ejemplo: 549XXXXXXXXX"
                   required
                   style={{
                     fontSize: "14px",
                     borderRadius: "5px",
                   }}
                 />
+                {phoneError && <p className="text-danger">{phoneError}</p>}
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label className="text-muted">Correo Electrónico</Form.Label>

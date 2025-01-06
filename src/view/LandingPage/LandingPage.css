@@ -1,0 +1,30 @@
+.animated-btn {
+    display: inline-block;
+    position: relative;
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    overflow: hidden;
+    transition: background-color 0.4s, color 0.4s;
+  }
+  
+  .animated-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: width 0.4s ease-in-out;
+    z-index: 0;
+  }
+  
+  .animated-btn:hover {
+    background-color: #020004;
+    color: white
+  }
+  
+  .animated-btn:hover::before {
+    width: 100%;
+  }
