@@ -54,8 +54,6 @@ export default function DashboardKarla() {
               variant="light"
               as={Link}
               to="/docKarla"
-              target="_blank"
-              rel="noopener noreferrer"
               style={{
                 backgroundColor: "#fff",
                 color: "#5bc0de",
@@ -91,8 +89,6 @@ export default function DashboardKarla() {
               variant="light"
               as={Link}
               to="/appointmentScheduler"
-              target="_blank"
-              rel="noopener noreferrer"
               style={{
                 backgroundColor: "#fff",
                 color: "#6f42c1",
@@ -124,8 +120,6 @@ export default function DashboardKarla() {
               variant="light"
               as={Link}
               to="/scheduler"
-              target="_blank"
-              rel="noopener noreferrer"
               style={{
                 backgroundColor: "#fff",
                 color: "#28a745",

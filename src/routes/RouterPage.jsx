@@ -37,7 +37,6 @@ function AppRoutes() {
   const { userData ,currentUser } = useAuth(); // Asegúrate de que useAuth se use dentro de AuthProvider
 
 const [dataUserFilter] = userData.filter(as=>as.email===currentUser.email)
-console.log("dataUserFilter: ", dataUserFilter);
 
   return (
     <Routes>
