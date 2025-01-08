@@ -1,27 +1,31 @@
 import React, { useState } from "react";
-import { Container, Button } from "react-bootstrap";
+import { Container, Tabs, Tab } from "react-bootstrap";
 import AdminScheduler from "./AdminScheduler";
 import UserScheduler from "./UserScheduler";
+import RequestedTurns from "./RequestedTurns";
 
 const Scheduler = () => {
-  const [role, setRole] = useState("admin"); // Cambia entre "admin" y "user"
+  const [activeTab, setActiveTab] = useState("admin");
 
   return (
     <Container className="pt-4">
-      <h2 className="text-center mb-4"> 
-        
-        
-      {role === "admin" ? "Gestionar Tus Turnos" :"Turnos Disponibles"}
-        
-  </h2>
-      <Button
-        onClick={() => setRole((prev) => (prev === "admin" ? "user" : "admin"))}
+      <h2 className="text-center mb-4">Gestión de Turnos</h2>
+      <Tabs
+        activeKey={activeTab}
+        onSelect={(tabKey) => setActiveTab(tabKey)}
         className="mb-4"
+        justify
       >
-        Cambiar a {role === "admin" ? "Usuario" : "Administrador"}
-      </Button>
-
-      {role === "admin" ? <AdminScheduler /> : <UserScheduler />}
+        <Tab eventKey="admin" title="Administrador">
+          <AdminScheduler />
+        </Tab>
+        <Tab eventKey="user" title="Usuario">
+          <UserScheduler />
+        </Tab>
+        <Tab eventKey="requested" title="Turnos Solicitados">
+          <RequestedTurns />
+        </Tab>
+      </Tabs>
     </Container>
   );
 };

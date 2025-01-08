@@ -13,7 +13,7 @@ import UpdateImagesDubia from "../view/DubiaScreem/UpdateImagesDubia";
 import UpdateImagesKarla from "../view/DrKarlaScreem/UpdateImagesKarla";
 
 import MobileProductScreen from "../view/DubiaScreem/MobileProductScreen";
-import MobileProductKarlaScreen from "../view/DrKarlaScreem/MobileProductScreen";
+import DashboardPageOnlineKarla from "../view/DrKarlaScreem/DashboardPageOnlineKarla";
 import GenericMobileScreen from "../view/GenericMobileScreen/GenericMobileScreen";
 import UpdateImagesGeneric from "../view/GenericMobileScreen/UpdateImagesGeneric";
 
@@ -54,7 +54,7 @@ const [dataUserFilter] = userData.filter(as=>as.email===currentUser.email)
       <Route exact path="/TripsScreen" element={<PrivateRoute><TripsScreen /></PrivateRoute>} />
       <Route exact path="/dubiaScreem" element={<PrivateRoute><UpdateImagesDubia /></PrivateRoute>} />
       <Route exact path="/dubiaVentas" element={<MobileProductScreen />} />
-      <Route exact path="/docKarla" element={<MobileProductKarlaScreen />} />
+      <Route exact path="/docKarla" element={<DashboardPageOnlineKarla />} />
       <Route
           exact
           path={"/karlaScreem"}

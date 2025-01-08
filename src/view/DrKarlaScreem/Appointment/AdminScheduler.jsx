@@ -117,7 +117,7 @@ const AdminScheduler = () => {
   const handleSendWhatsApp = () => {
     if (reservationDetails?.phone) {
       const message = `Hola ${reservationDetails.email}, su turno reservado para el ${reservationDetails.date} a las ${reservationDetails.time} sigue en pie. Si tiene alguna consulta, contáctenos.`;
-      const url = `https://wa.me/${reservationDetails.phone}?text=${encodeURIComponent(
+      const url = `https://wa.me/549${reservationDetails.phone}?text=${encodeURIComponent(
         message
       )}`;
       window.open(url, "_blank");
