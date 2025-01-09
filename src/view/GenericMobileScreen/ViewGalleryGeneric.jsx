@@ -33,7 +33,7 @@ const ViewGalleryGeneric = ({domain}) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, tableActive));
+        const querySnapshot = await getDocs(collection(db, `applicationsBase/StoreInventory/${tableActive}`));
         const data = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -57,7 +57,7 @@ const ViewGalleryGeneric = ({domain}) => {
   const handleDelete = async (id) => {
     try {
       setDeletingProductId(id);
-      await deleteDoc(doc(db, tableActive, id));
+      await deleteDoc(doc(db, `applicationsBase/StoreInventory/${tableActive}`, id));
       setProducts((prev) => prev.filter((product) => product.id !== id));
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -96,7 +96,7 @@ const ViewGalleryGeneric = ({domain}) => {
       }
 
       const updatedProduct = { ...editableData, images: updatedImages };
-      const productRef = doc(db, tableActive, editingProductId);
+      const productRef = doc(db, `applicationsBase/StoreInventory/${tableActive}`, editingProductId);
       await updateDoc(productRef, updatedProduct);
 
       setProducts((prev) =>

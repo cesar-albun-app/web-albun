@@ -11,7 +11,7 @@ export default function DashboardGeneric({ domain }) {
           style={{ backgroundColor: "#ffc107", color: "white" }}
         >
           <Card.Body className="d-flex flex-column justify-content-center align-items-center">
-            <h6>Craga</h6>
+            <h6>Carga Productos</h6>
             <Button variant="light" as={Link} to="/genericRoute">
               Cargar
             </Button>
@@ -24,7 +24,7 @@ export default function DashboardGeneric({ domain }) {
           style={{ backgroundColor: "black", color: "white" }}
         >
           <Card.Body className="d-flex flex-column justify-content-center align-items-center">
-            <h6>Web</h6>
+            <h6>Web de Productos y servicios</h6>
             <Button variant="light" as={Link} to={`/${domain}`}>
               Web
             </Button>

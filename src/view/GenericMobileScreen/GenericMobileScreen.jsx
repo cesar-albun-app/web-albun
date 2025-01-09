@@ -33,7 +33,7 @@ const GenericMobileScreen = (userData) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, domain));
+        const querySnapshot = await getDocs(collection(db, `applicationsBase/StoreInventory/${domain}`));
         const data = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),

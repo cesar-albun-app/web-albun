@@ -3,7 +3,8 @@ import { Form, Button, Container, Spinner, Row, Col, Image } from "react-bootstr
 import { useNavigate } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { db, storage } from "../../firebase"; // Ajusta la ruta según tu configuración
-import { collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, doc, setDoc, getDocs, addDoc } from "firebase/firestore";
+
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const RegisterForm = () => {
@@ -74,13 +75,14 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(""); // Limpiar errores anteriores
-    if (!validatePhone() || !validateDomain()) return; // Validar teléfono y dominio antes de continuar
-
+  
+    // Validar teléfono y dominio antes de continuar
+    if (!validatePhone() || !validateDomain()) return;
+  
     setLoading(true);
-
+  
     const auth = getAuth();
-    const usersCollection = collection(db, "users");
-
+  
     try {
       // Crear usuario en Firebase Authentication
       const { user } = await createUserWithEmailAndPassword(
@@ -88,7 +90,7 @@ const RegisterForm = () => {
         formData.email,
         formData.password
       );
-
+  
       // Subir imagen (si existe) al Storage
       let logoUrl = "";
       if (formData.logo) {
@@ -96,9 +98,12 @@ const RegisterForm = () => {
         await uploadBytes(storageRef, formData.logo);
         logoUrl = await getDownloadURL(storageRef);
       }
-
-      // Guardar datos adicionales en Firestore
-      await addDoc(usersCollection, {
+  
+      // Crear referencia al documento del usuario (debe tener un número par de segmentos)
+      const userDocRef = doc(db, `applicationsBase/users/use`, user.uid);
+  
+      // Guardar datos adicionales en el documento del usuario
+      await setDoc(userDocRef, {
         uid: user.uid,
         firstName: formData.firstName,
         phone: formData.phone,
@@ -109,9 +114,21 @@ const RegisterForm = () => {
         logo: logoUrl,
         createdAt: new Date(),
       });
-
+  
+      // Crear una referencia a la subcolección "orders"
+      const ordersCollectionRef = collection(userDocRef, "orders");
+  
+      // Agregar un documento inicial a la subcolección
+      const initialOrder = {
+        orderName: "Welcome Package",
+        description: "Initial setup for new user",
+        createdAt: new Date(),
+      };
+  
+      await addDoc(ordersCollectionRef, initialOrder);
+  
       alert("Registro exitoso.");
-      navigate("/Login"); // Redirige al dashboard o donde desees
+      navigate("/Login"); // Redirige al login o donde desees
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         setError("El correo electrónico ya está registrado.");

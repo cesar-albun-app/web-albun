@@ -45,10 +45,14 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUserData = async () => {
     try {
-      const usersCollection = collection(db, "users");
+      // Referencia a la colección "users" dentro de "aplicationBase"
+      const usersCollection = collection(db, "applicationsBase/users/use");
+  
+      // Obtener todos los documentos de la colección
       const querySnapshot = await getDocs(usersCollection);
-
+  
       if (!querySnapshot.empty) {
+        // Mapear los documentos a un array de objetos
         const users = querySnapshot.docs.map((doc) => ({
           id: doc.id, // Incluye el ID del documento
           ...doc.data(), // Incluye los datos del documento

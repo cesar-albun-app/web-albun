@@ -11,7 +11,6 @@ const containerStyle = {
 };
 
 const UpdateGenericDb = ({ selectedImages, handleClearImages ,domain}) => {
-  console.log("domain: ", domain);
   const [productName, setProductName] = useState(""); // Product name
   const [subtitle, setSubtitle] = useState(""); // Subtitle
   const [details, setDetails] = useState(""); // Details
@@ -82,7 +81,7 @@ const UpdateGenericDb = ({ selectedImages, handleClearImages ,domain}) => {
         })
       );
 
-      await addDoc(collection(db, domain), {
+      await addDoc(collection(db,`applicationsBase/StoreInventory/${domain}` ), {
         productName,
         subtitle,
         details,
