@@ -4,7 +4,7 @@ import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 import { Table, Spinner, Button, Modal, Form } from "react-bootstrap";
 import "./SchedulerTable.css"; 
 
-const RequestedTurns = () => {
+const RequestedTurns = ({domain})  => {
   const [requestedTurns, setRequestedTurns] = useState([]);
   const [filteredTurns, setFilteredTurns] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -23,8 +23,8 @@ const RequestedTurns = () => {
     const fetchRequestedTurns = async () => {
       setLoading(true);
       try {
-        const schedulerCollection = collection(db, "Scheduler");
-        const querySnapshot = await getDocs(schedulerCollection);
+         const querySnapshot = await getDocs(collection(db, `applicationsBase/schedulers/${domain}`));
+   
 
         const turns = [];
         querySnapshot.docs.forEach((doc) => {
@@ -105,8 +105,7 @@ const RequestedTurns = () => {
           : t
       );
       setRequestedTurns(updatedTurns);
-
-      const docRef = doc(db, "Scheduler", turn.id);
+      const docRef = doc(db, `applicationsBase/schedulers/${domain}`, turn.id);
       const slots = (await (await getDocs(docRef)).data()).slots.map((slot) =>
         slot.time === turn.time ? { ...slot, status: newStatus } : slot
       );
