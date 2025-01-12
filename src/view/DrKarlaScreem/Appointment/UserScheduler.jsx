@@ -11,6 +11,7 @@ import { Calendar } from "react-calendar";
 import { Table, Button, Modal, Form, Spinner } from "react-bootstrap";
 import "./SchedulerTable.css";
 import { FaCheckCircle } from "react-icons/fa"; // Ícono de disponibilidad
+import useEmailSender from "../../../hooks/useEmailSender"
 
 const UserScheduler = () => {
   const [daySchedules, setDaySchedules] = useState({});
@@ -25,6 +26,7 @@ const UserScheduler = () => {
   const [isBooking, setIsBooking] = useState(false);
 
   const schedulerCollection = collection(db, "Scheduler");
+  const { sendEmail, loading, error, success } = useEmailSender();
 
   const fetchSchedulerDays = async () => {
     try {
@@ -100,8 +102,34 @@ const UserScheduler = () => {
       setIsBooking(false); // Ocultar el spinner
       setShowBookingModal(false);
       setBookingInfo({ name: "", email: "", phone: "", time: "" });
+      sendEmailActions()
     }
   };
+
+  const sendEmailActions = async () => {
+
+    const selectedDayApp = selectedDay.date;
+    const date = new Date(selectedDayApp);
+const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+
+// Crear el mensaje actualizado
+const message = `Estoy interesado en tus servicios. Solicité una consulta el día ${formattedDate}. Muchas gracias por tu pronta respuesta.`;
+
+
+    sendEmail({
+      recipient: "karla23med@gmail.com",
+      senderName: bookingInfo.name,
+      senderPhone:bookingInfo.phone,
+      subject: "Consulta importante",
+      message: message,
+      additionalText: "Muchas gracias por tu pronta respuesta.",
+    });
+    
+  
+
+  }
+
+
 
   useEffect(() => {
     fetchSchedulerDays();
