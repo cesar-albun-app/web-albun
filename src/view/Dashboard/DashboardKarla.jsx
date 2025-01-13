@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Button, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FaUpload, FaGlobe, FaClipboardList, FaCalendarAlt } from "react-icons/fa";
+import { FaUpload, FaGlobe, FaClipboardList, FaCalendarAlt,FaUserAlt } from "react-icons/fa";
 
 export default function DashboardKarla() {
   return (
@@ -129,6 +129,36 @@ export default function DashboardKarla() {
               }}
             >
               Agenda
+            </Button>
+          </Card.Body>
+        </Card>
+      </Col>
+      <Col md={3} className="mb-4">
+        <Card
+          className="h-100 shadow-sm"
+          style={{
+            backgroundColor: "#28a745",
+            color: "#fff",
+            border: "none",
+            borderRadius: "12px",
+          }}
+        >
+          <Card.Body className="d-flex flex-column justify-content-center align-items-center">
+            <FaUserAlt size={40} className="mb-3" style={{ color: "#fff" }} />
+            <h6 className="text-center mb-3">Listado de Pacientes</h6>
+            <Button
+              variant="light"
+              as={Link}
+              to="/userPageKarla"
+              style={{
+                backgroundColor: "#fff",
+                color: "#28a745",
+                border: "none",
+                borderRadius: "20px",
+                fontWeight: "bold",
+              }}
+            >
+              Abrir
             </Button>
           </Card.Body>
         </Card>

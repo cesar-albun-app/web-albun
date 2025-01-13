@@ -11,10 +11,11 @@ import TripsScreen from "../view/Trips/TripsScreen";
 
 import UpdateImagesDubia from "../view/DubiaScreem/UpdateImagesDubia";
 import UpdateImagesKarla from "../view/DrKarlaScreem/UpdateImagesKarla";
+import UserPage from '../view/DrKarlaScreem/userPage/UserPage'
 
 import MobileProductScreen from "../view/DubiaScreem/MobileProductScreen";
 import DashboardPageOnlineKarla from "../view/DrKarlaScreem/DashboardPageOnlineKarla";
-import GenericMobileScreen from "../view/GenericMobileScreen/GenericMobileScreen";
+import DashboardPageOnline from "../view/GenericMobileScreen/DashboardPageOnline";
 import UpdateImagesGeneric from "../view/GenericMobileScreen/UpdateImagesGeneric";
 import SchedulerGeneric from "../view/GenericMobileScreen/Appointment/SchedulerGeneric";
 
@@ -84,6 +85,8 @@ function AppRoutes() {
       {/* KARLA */}
 
       <Route exact path="/docKarla" element={<DashboardPageOnlineKarla />} />
+      <Route exact path="/userPageKarla" element={<UserPage />} />
+
       <Route
         exact
         path={"/karlaScreem"}
@@ -143,7 +146,9 @@ function AppRoutes() {
                   key={user.id} // Usar el ID como clave única
                   exact
                   path={`/${user.domain}`} // Ruta basada en el dominio
-                  element={<GenericMobileScreen userData={user} />} // Puedes pasar props dinámicos si lo necesitas
+                  element={<
+        
+                    DashboardPageOnline userData={user} />} // Puedes pasar props dinámicos si lo necesitas
                 />
               </>
             )

@@ -11,8 +11,9 @@ import { Calendar } from "react-calendar";
 import { Table, Button, Modal, Form, Spinner } from "react-bootstrap";
 import "./SchedulerTable.css";
 import { FaCheckCircle } from "react-icons/fa"; // Ícono de disponibilidad
+import useEmailSender from "../../../hooks/useEmailSender";
 
-const UserScheduler = ({domain})  => {
+const UserScheduler = ({ domain, email }) => {
   const [daySchedules, setDaySchedules] = useState({});
   const [selectedDay, setSelectedDay] = useState(null);
   const [showBookingModal, setShowBookingModal] = useState(false);
@@ -23,12 +24,14 @@ const UserScheduler = ({domain})  => {
     time: "",
   });
   const [isBooking, setIsBooking] = useState(false);
-
+  const { sendEmail, loading, error, success } = useEmailSender();
 
   const fetchSchedulerDays = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, `applicationsBase/schedulers/${domain}`));
-     
+      const querySnapshot = await getDocs(
+        collection(db, `applicationsBase/schedulers/${domain}`)
+      );
+
       const data = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -54,14 +57,14 @@ const UserScheduler = ({domain})  => {
       alert("Por favor, completa toda la información.");
       return;
     }
-  
+
     // Validar el formato del correo electrónico
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(bookingInfo.email)) {
       alert("Por favor, ingresa un correo electrónico válido.");
       return;
     }
-  
+
     setIsBooking(true); // Mostrar el spinner
     const dayString = selectedDay.date.toISOString().split("T")[0];
     const updatedSchedules = daySchedules[dayString].map((slot) =>
@@ -77,20 +80,23 @@ const UserScheduler = ({domain})  => {
           }
         : slot
     );
-  
+
     try {
-    const docRef = doc(db, `applicationsBase/schedulers/${domain}`, dayString);
-      
-  
+      const docRef = doc(
+        db,
+        `applicationsBase/schedulers/${domain}`,
+        dayString
+      );
+
       await updateDoc(docRef, { slots: updatedSchedules }).catch(async () => {
         await setDoc(docRef, { date: dayString, slots: updatedSchedules });
       });
-  
+
       setDaySchedules((prevSchedules) => ({
         ...prevSchedules,
         [dayString]: updatedSchedules,
       }));
-  
+
       alert("Turno reservado con éxito.");
     } catch (error) {
       console.error("Error al reservar turno en Scheduler:", error);
@@ -101,7 +107,30 @@ const UserScheduler = ({domain})  => {
       setIsBooking(false); // Ocultar el spinner
       setShowBookingModal(false);
       setBookingInfo({ name: "", email: "", phone: "", time: "" });
+      sendEmailActions();
     }
+  };
+
+  const sendEmailActions = async () => {
+    const selectedDayApp = selectedDay.date;
+    const date = new Date(selectedDayApp);
+    const formattedDate = `${date.getDate().toString().padStart(2, "0")}/${(
+      date.getMonth() + 1
+    )
+      .toString()
+      .padStart(2, "0")}/${date.getFullYear()}`;
+
+    // Crear el mensaje actualizado
+    const message = `Estoy interesado en tus servicios. Solicité una consulta el día ${formattedDate}. Muchas gracias por tu pronta respuesta.`;
+
+    sendEmail({
+      recipient: email,
+      senderName: bookingInfo.name,
+      senderPhone: bookingInfo.phone,
+      subject: "Consulta importante",
+      message: message,
+      additionalText: "Muchas gracias por tu pronta respuesta.",
+    });
   };
 
   useEffect(() => {
