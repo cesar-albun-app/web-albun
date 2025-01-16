@@ -11,7 +11,8 @@ import { Calendar } from "react-calendar";
 import { Table, Button, Modal, Form, Spinner } from "react-bootstrap";
 import "./SchedulerTable.css";
 import { FaCheckCircle } from "react-icons/fa"; // Ícono de disponibilidad
-import useEmailSender from "../../../hooks/useEmailSender"
+import useEmailSender from "../../../hooks/useEmailSender";
+import ConfirmationModal from "../../../components/Modals/ConfirmationModal";
 
 const UserScheduler = () => {
   const [daySchedules, setDaySchedules] = useState({});
@@ -24,6 +25,7 @@ const UserScheduler = () => {
     time: "",
   });
   const [isBooking, setIsBooking] = useState(false);
+  const [show, setShow] = useState(false);
 
   const schedulerCollection = collection(db, "Scheduler");
   const { sendEmail, loading, error, success } = useEmailSender();
@@ -56,14 +58,14 @@ const UserScheduler = () => {
       alert("Por favor, completa toda la información.");
       return;
     }
-  
+
     // Validar el formato del correo electrónico
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(bookingInfo.email)) {
       alert("Por favor, ingresa un correo electrónico válido.");
       return;
     }
-  
+
     setIsBooking(true); // Mostrar el spinner
     const dayString = selectedDay.date.toISOString().split("T")[0];
     const updatedSchedules = daySchedules[dayString].map((slot) =>
@@ -79,19 +81,19 @@ const UserScheduler = () => {
           }
         : slot
     );
-  
+
     try {
       const docRef = doc(db, "Scheduler", dayString);
-  
+
       await updateDoc(docRef, { slots: updatedSchedules }).catch(async () => {
         await setDoc(docRef, { date: dayString, slots: updatedSchedules });
       });
-  
+
       setDaySchedules((prevSchedules) => ({
         ...prevSchedules,
         [dayString]: updatedSchedules,
       }));
-  
+
       alert("Turno reservado con éxito.");
     } catch (error) {
       console.error("Error al reservar turno en Scheduler:", error);
@@ -102,20 +104,24 @@ const UserScheduler = () => {
       setIsBooking(false); // Ocultar el spinner
       setShowBookingModal(false);
       setBookingInfo({ name: "", email: "", phone: "", time: "" });
-      sendEmailActions()
+      sendEmailActions();
+      setShow(true);
     }
   };
 
   const sendEmailActions = async () => {
-
     const selectedDayApp = selectedDay.date;
     const date = new Date(selectedDayApp);
-const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+    const formattedDate = `${date.getDate().toString().padStart(2, "0")}/${(
+      date.getMonth() + 1
+    )
+      .toString()
+      .padStart(2, "0")}/${date.getFullYear()}`;
 
-// Crear el mensaje actualizado
-const message = `Estoy interesado en tus servicios. Solicité una consulta el día ${formattedDate}. Muchas gracias por tu pronta respuesta.`;
+    // Crear el mensaje actualizado
+    const message = `Estoy interesado en tus servicios. Solicité una consulta el día ${formattedDate}. Muchas gracias por tu pronta respuesta.`;
 
-
+    
     sendEmail({
       recipient: "karla23med@gmail.com",
       senderName: bookingInfo.name,
@@ -123,13 +129,21 @@ const message = `Estoy interesado en tus servicios. Solicité una consulta el d�
       subject: "Consulta importante",
       message: message,
       additionalText: "Muchas gracias por tu pronta respuesta.",
-    });
-    
-  
+    }); 
 
-  }
+    const messageUser = `Solicitaste un turno el día  ${formattedDate}. Muchas gracias`;
+
+    sendEmail({
+      recipient: bookingInfo.email,
+      senderName: bookingInfo.name,
+      senderPhone:bookingInfo.phone,
+      subject: "Tienes Una consulta solicitado con la dr karla Leañez",
+      message: messageUser,
+      additionalText: "Muchas gracias.",
+    }); 
 
 
+  };
 
   useEffect(() => {
     fetchSchedulerDays();
@@ -137,6 +151,7 @@ const message = `Estoy interesado en tus servicios. Solicité una consulta el d�
 
   return (
     <>
+      <ConfirmationModal show={show} setShow={setShow} />
       <div className="calendar-legend">
         <FaCheckCircle className="legend-icon" />
         <span className="legend-text">

@@ -12,6 +12,7 @@ import { Table, Button, Modal, Form, Spinner } from "react-bootstrap";
 import "./SchedulerTable.css";
 import { FaCheckCircle } from "react-icons/fa"; // Ícono de disponibilidad
 import useEmailSender from "../../../hooks/useEmailSender";
+import ConfirmationModal from "../../../components/Modals/ConfirmationModal";
 
 const UserScheduler = ({ domain, email }) => {
   const [daySchedules, setDaySchedules] = useState({});
@@ -25,6 +26,7 @@ const UserScheduler = ({ domain, email }) => {
   });
   const [isBooking, setIsBooking] = useState(false);
   const { sendEmail, loading, error, success } = useEmailSender();
+  const [show, setShow] = useState(false);
 
   const fetchSchedulerDays = async () => {
     try {
@@ -108,6 +110,7 @@ const UserScheduler = ({ domain, email }) => {
       setShowBookingModal(false);
       setBookingInfo({ name: "", email: "", phone: "", time: "" });
       sendEmailActions();
+      setShow(true)
     }
   };
 
@@ -131,6 +134,20 @@ const UserScheduler = ({ domain, email }) => {
       message: message,
       additionalText: "Muchas gracias por tu pronta respuesta.",
     });
+
+
+    const messageUser = `Solicitaste un turno el día  ${formattedDate}. Muchas gracias`;
+
+    sendEmail({
+      recipient: bookingInfo.email,
+      senderName: bookingInfo.name,
+      senderPhone:bookingInfo.phone,
+      subject: "Tienes Una Turno solicitado",
+      message: messageUser,
+      additionalText: "Muchas gracias.",
+    }); 
+
+
   };
 
   useEffect(() => {
@@ -139,6 +156,7 @@ const UserScheduler = ({ domain, email }) => {
 
   return (
     <>
+          <ConfirmationModal show={show} setShow={setShow} />
       <div className="calendar-legend">
         <FaCheckCircle className="legend-icon" />
         <span className="legend-text">
