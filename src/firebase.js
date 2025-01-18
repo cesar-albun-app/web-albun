@@ -4,13 +4,13 @@ import { getStorage } from 'firebase/storage';
 import { getAuth, setPersistence, browserLocalPersistence } from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBcnehKVfhGyibk9w2Bw8RwfvJD1WKE5G4",
-    authDomain: "albun-app.firebaseapp.com",
-    projectId: "albun-app",
-    storageBucket: "albun-app.appspot.com",
-    messagingSenderId: "752725821784",
-    appId: "1:752725821784:web:d48cbf4ef3b03a26263d2d",
-    measurementId: "G-KKLDHRHJ0B"
+  apiKey: "AIzaSyBlOa5kLtL00LlnfFYUiGUq-Eyd9sVFBkk",
+  authDomain: "flexiappprod.firebaseapp.com",
+  projectId: "flexiappprod",
+  storageBucket: "flexiappprod.firebasestorage.app",
+  messagingSenderId: "151937755130",
+  appId: "1:151937755130:web:12a79bf68cc99572d9a643",
+  measurementId: "G-0PMZKTPM68"
 };
 
 // Inicialización de Firebase
