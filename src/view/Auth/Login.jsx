@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Container, Row, Col, Alert, Card, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import "./Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -31,33 +32,41 @@ function Login() {
     <Container style={{ marginTop: 100, padding: 20 }}>
       <Row className="justify-content-center">
         <Col xs={12} sm={10} md={8} lg={6} xl={5}>
-          <Card className="p-4 shadow-lg">
+          <Card className="p-4 shadow-lg login-card">
             <Card.Body>
-              <h2 className="text-center mb-4">Login</h2>
+              <h2 className="text-center mb-4 login-title">Ingresar</h2>
               {error && <Alert variant="danger">{error}</Alert>}
               <Form onSubmit={handleLogin}>
                 <Form.Group controlId="formBasicEmail" className="mb-3">
-                  <Form.Label>Email address</Form.Label>
+                  <Form.Label>Usuario</Form.Label>
                   <Form.Control
                     type="email"
-                    placeholder="Enter email"
+                    placeholder="Ingrese Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    className="login-input"
                   />
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword" className="mb-3">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>Contraseña</Form.Label>
                   <Form.Control
                     type="password"
-                    placeholder="Password"
+                    placeholder="Ingrese Contraseña"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    className="login-input"
                   />
                 </Form.Group>
 
                 <div className="d-grid">
-                  <Button variant="primary" type="submit" size="lg" disabled={loading}>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    size="lg"
+                    disabled={loading}
+                    className="login-button"
+                  >
                     {loading ? (
                       <>
                         <Spinner
@@ -75,6 +84,7 @@ function Login() {
                   </Button>
                 </div>
               </Form>
+              
             </Card.Body>
           </Card>
         </Col>

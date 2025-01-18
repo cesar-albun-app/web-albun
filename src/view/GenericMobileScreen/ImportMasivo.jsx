@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase";
-import {
-  collection,
-  getDocs,
-  addDoc,
-} from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import { Container, Table, Button, Spinner, Dropdown, ProgressBar } from "react-bootstrap";
 import * as XLSX from "xlsx";
+import styles from "./styles/ViewGallery.module.css";
 
-const ViewGallery = ({domain}) => {
+const ViewGallery = ({ domain }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredCategory, setFilteredCategory] = useState("All");
-  const [uploadProgress, setUploadProgress] = useState(0); // Estado para el progreso
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const categories = ["All", "Poduct", "Promotions"];
   const categoryTranslations = {
@@ -20,12 +17,15 @@ const ViewGallery = ({domain}) => {
     Poduct: "Productos",
     Promotions: "Promociones",
   };
+
   const tableActive = domain;
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-          const querySnapshot = await getDocs(collection(db, `applicationsBase/StoreInventory/${tableActive}`));
+        const querySnapshot = await getDocs(
+          collection(db, `applicationsBase/StoreInventory/${tableActive}`)
+        );
         const data = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -62,12 +62,12 @@ const ViewGallery = ({domain}) => {
         return;
       }
 
-      setUploadProgress(0); // Inicializa el progreso
+      setUploadProgress(0);
 
       const newProducts = [];
       for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
-        setUploadProgress(Math.round(((i + 1) / rows.length) * 100)); // Actualiza el progreso
+        setUploadProgress(Math.round(((i + 1) / rows.length) * 100));
 
         const product = {
           productName: row.Nombre || "",
@@ -78,35 +78,38 @@ const ViewGallery = ({domain}) => {
         };
 
         newProducts.push(product);
-        await addDoc(collection(db, `applicationsBase/StoreInventory/${tableActive}`), product); // Guarda en Firestore registro por registro
+        await addDoc(
+          collection(db, `applicationsBase/StoreInventory/${tableActive}`),
+          product
+        );
       }
 
-      // Actualizar la UI
       setProducts((prev) => [...prev, ...newProducts]);
-
       alert("Datos importados correctamente.");
     } catch (error) {
       console.error("Error importing Excel file:", error);
       alert("Hubo un error al procesar el archivo.");
     } finally {
-      setTimeout(() => setUploadProgress(0), 1000); // Oculta la barra tras 1 segundo
+      setTimeout(() => setUploadProgress(0), 1000);
     }
   };
 
   if (loading) {
     return (
-      <Container className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+      <Container
+        className={`${styles.loadingContainer} d-flex justify-content-center align-items-center`}
+      >
         <Spinner animation="border" />
       </Container>
     );
   }
 
   return (
-    <Container className="pt-4">
-      <h2 className="text-center mb-4">Productos</h2>
+    <Container className={`${styles.container} pt-4`}>
+      <h2 className={`${styles.title} text-center mb-4`}>Productos</h2>
 
       {/* Botón para Importar Excel */}
-      <div className="mb-4 d-flex justify-content-between align-items-center">
+      <div className={`${styles.filterContainer} mb-4`}>
         <Dropdown>
           <Dropdown.Toggle variant="primary" id="dropdown-basic">
             Filtrar por Categoría
@@ -114,7 +117,10 @@ const ViewGallery = ({domain}) => {
 
           <Dropdown.Menu>
             {categories.map((category) => (
-              <Dropdown.Item key={category} onClick={() => setFilteredCategory(category)}>
+              <Dropdown.Item
+                key={category}
+                onClick={() => setFilteredCategory(category)}
+              >
                 {categoryTranslations[category] || category}
               </Dropdown.Item>
             ))}
@@ -122,14 +128,14 @@ const ViewGallery = ({domain}) => {
         </Dropdown>
 
         <div>
-          <label htmlFor="upload-excel" className="btn btn-success">
+          <label htmlFor="upload-excel" className={styles.uploadLabel}>
             Importar Excel
           </label>
           <input
             type="file"
             id="upload-excel"
             accept=".xlsx, .xls"
-            style={{ display: "none" }}
+            className={styles.hiddenInput}
             onChange={handleExcelImport}
           />
         </div>
@@ -142,14 +148,15 @@ const ViewGallery = ({domain}) => {
             animated
             now={uploadProgress}
             label={`${uploadProgress}%`}
+            className={styles.progressBar}
           />
         </div>
       )}
 
       {/* Tabla de Productos */}
-      <div style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", borderRadius: "10px", overflow: "hidden" }}>
-        <Table bordered responsive className="table-modern">
-          <thead style={{ backgroundColor: "red", borderBottom: "2px solid #dee2e6" }}>
+      <div className={styles.tableContainer}>
+        <Table bordered responsive className={styles.table}>
+          <thead>
             <tr>
               <th>#</th>
               <th>Nombre</th>
@@ -160,11 +167,13 @@ const ViewGallery = ({domain}) => {
           </thead>
           <tbody>
             {filteredProducts.map((product, index) => (
-              <tr key={product.id}>
+              <tr key={product.id} className={styles.tableRow}>
                 <td>{index + 1}</td>
                 <td>{product.productName}</td>
                 <td>{product.details}</td>
-                <td>{categoryTranslations[product.category] || product.category}</td>
+                <td>
+                  {categoryTranslations[product.category] || product.category}
+                </td>
                 <td>{`$${product.amount}`}</td>
               </tr>
             ))}

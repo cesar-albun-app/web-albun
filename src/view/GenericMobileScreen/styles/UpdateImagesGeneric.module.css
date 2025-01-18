@@ -1,0 +1,81 @@
+/* Contenedor general */
+.container {
+    padding: 20px;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  /* Barra de pestañas */
+  .tabsContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  /* Botón de pestañas */
+  .tabButton {
+    padding: 10px 20px;
+    border: none;
+    background: transparent;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+    font-size: 1rem;
+    position: relative;
+  }
+  
+  .tabButton:hover {
+    color: #4a90e2;
+    transform: translateY(-3px);
+  }
+  
+  .activeTab {
+    color: #4a90e2;
+    border-bottom: 3px solid #4a90e2;
+    animation: slideIn 0.5s ease-out;
+  }
+  
+  /* Animación de entrada para las pestañas */
+  @keyframes slideIn {
+    from {
+      transform: translateX(-10px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Contenido de las pestañas */
+  .sectionContent {
+    animation: fadeInUp 0.5s ease-in-out;
+  }
+  
+  /* Título de la sección activa */
+  .sectionTitle {
+    text-align: center;
+    font-size: 2rem;
+    color: #4a90e2;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Animaciones */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }

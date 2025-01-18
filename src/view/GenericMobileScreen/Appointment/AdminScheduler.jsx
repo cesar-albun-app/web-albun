@@ -3,7 +3,7 @@ import { db } from "../../../firebase";
 import { collection, getDocs, updateDoc, doc, setDoc } from "firebase/firestore";
 import { Calendar } from "react-calendar";
 import { Spinner, Table, Button, Modal,Accordion } from "react-bootstrap";
-import "./SchedulerTable.css"; 
+import "../styles/SchedulerTable.css"; 
 
 const AdminScheduler = ({domain}) => {
   const [selectedWeek, setSelectedWeek] = useState(new Date());
@@ -174,32 +174,28 @@ const AdminScheduler = ({domain}) => {
 
   return (
     <>
-      <h5>Selecciona una semana</h5>
-      <div className="week-selector-container">
-      <h5 className="week-selector-title">Selecciona una semana</h5>
+    <div className="scheduler-header">
+      <h4>Gestionar Turnos</h4>
       <Calendar
         onChange={(date) => setSelectedWeek(date)}
         value={selectedWeek}
-        view="month"
-        className="custom-calendar mb-4"
+        className="custom-calendar"
       />
     </div>
-      {loading ? (
-        <Spinner animation="border" />
-      ) : (
-        <>
-          {daysOfWeek.map((day, index) => {
-            const dayKey = day.date.toISOString().split("T")[0];
-            const slots = daySchedules[dayKey] || [];
+    {loading ? (
+      <Spinner animation="border" className="loading-spinner" />
+    ) : (
+      <div className="scheduler-container">
+        {daysOfWeek.map((day) => {
+          const dayKey = day.date.toISOString().split("T")[0];
+          const slots = daySchedules[dayKey] || [];
 
-            return (
-              <Accordion defaultActiveKey="0" className="mb-3 shadow-sm rounded">
+          return (
+            <Accordion key={dayKey} className="day-accordion">
               <Accordion.Item eventKey={dayKey}>
-                <Accordion.Header>
-                  <strong>{day.date.toLocaleDateString()}</strong>
-                </Accordion.Header>
+                <Accordion.Header>{day.date.toLocaleDateString()}</Accordion.Header>
                 <Accordion.Body>
-                  <Table bordered hover responsive className="modern-table">
+                  <Table responsive hover className="schedule-table">
                     <thead>
                       <tr>
                         <th>Hora</th>
@@ -209,21 +205,17 @@ const AdminScheduler = ({domain}) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {slots.map((slot, slotIndex) => (
-                        <tr key={slotIndex}>
+                      {slots.map((slot, index) => (
+                        <tr key={index}>
                           <td>{slot.time}</td>
                           <td>
                             {slot.user
-                              ? "Solicitado"
+                              ? "Reservado"
                               : slot.isAvailable
                               ? "Disponible"
-                              : "Deshabilitado"}
+                              : "No disponible"}
                           </td>
-                          <td>
-                            {slot.user
-                              ? `${slot.user.name} (${slot.user.email})`
-                              : "N/A"}
-                          </td>
+                          <td>{slot.user ? slot.user.email : "N/A"}</td>
                           <td>
                             <Button
                               size="sm"
@@ -234,18 +226,13 @@ const AdminScheduler = ({domain}) => {
                                   ? "success"
                                   : "danger"
                               }
-                              className="action-button"
                               onClick={() =>
                                 slot.user
                                   ? handleShowDetails(dayKey, slot)
-                                  : handleToggleAvailability(day, slotIndex)
+                                  : handleToggleAvailability(day, index)
                               }
                             >
-                              {slot.user
-                                ? "Ver detalles"
-                                : slot.isAvailable
-                                ? "Deshabilitar"
-                                : "Habilitar"}
+                              {slot.user ? "Detalles" : slot.isAvailable ? "Deshabilitar" : "Habilitar"}
                             </Button>
                           </td>
                         </tr>
@@ -255,60 +242,54 @@ const AdminScheduler = ({domain}) => {
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
-            );
-          })}
-          <Button
-            onClick={handleSaveSchedulerDays}
-            className="mt-4"
-            variant="primary"
-          >
-            {isSaving ? <Spinner animation="border" size="sm" /> : "Guardar Horarios"}
-
-          </Button>
-        </>
-      )}
-
-      <Modal
-        show={showDetailsModal}
-        onHide={() => setShowDetailsModal(false)}
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Detalles de la Reserva</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {reservationDetails ? (
-            <>
-              <p>
-                <strong>Fecha:</strong> {reservationDetails.date}
-              </p>
-              <p>
-                <strong>Hora:</strong> {reservationDetails.time}
-              </p>
-              <p>
-                <strong>Correo:</strong> {reservationDetails.email}
-              </p>
-              <p>
-                <strong>Teléfono:</strong> {reservationDetails.phone}
-              </p>
-            </>
-          ) : (
-            <p>No hay detalles disponibles.</p>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="danger" onClick={handleCancelTurn}>
-            Cancelar Turno
-          </Button>
-          <Button variant="success" onClick={handleSendWhatsApp}>
-            Enviar WhatsApp
-          </Button>
-          <Button variant="secondary" onClick={() => setShowDetailsModal(false)}>
-            Cerrar
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+          );
+        })}
+        <Button
+          onClick={handleSaveSchedulerDays}
+          variant="primary"
+          className="save-button"
+        >
+          {isSaving ? <Spinner animation="border" size="sm" /> : "Guardar cambios"}
+        </Button>
+      </div>
+    )}
+    <Modal show={showDetailsModal} onHide={() => setShowDetailsModal(false)} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>Detalles de la Reserva</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {reservationDetails ? (
+          <>
+            <p>
+              <strong>Fecha:</strong> {reservationDetails.date}
+            </p>
+            <p>
+              <strong>Hora:</strong> {reservationDetails.time}
+            </p>
+            <p>
+              <strong>Correo:</strong> {reservationDetails.email}
+            </p>
+            <p>
+              <strong>Teléfono:</strong> {reservationDetails.phone}
+            </p>
+          </>
+        ) : (
+          <p>No hay detalles disponibles.</p>
+        )}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="danger" onClick={handleCancelTurn}>
+          Cancelar Turno
+        </Button>
+        <Button variant="success" onClick={handleSendWhatsApp}>
+          Enviar WhatsApp
+        </Button>
+        <Button variant="secondary" onClick={() => setShowDetailsModal(false)}>
+          Cerrar
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  </>
   );
 };
 

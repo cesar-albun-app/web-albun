@@ -1,0 +1,96 @@
+/* Contenedor de las tarjetas */
+.dashboard-cards {
+    margin-top: 20px;
+  }
+  
+  /* Estilo base de las tarjetas */
+  .dashboard-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .dashboard-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Colores personalizados */
+  .purple-card {
+    background-color: #6a0dad;
+    color: #fff;
+  }
+  
+  .blue-card {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  /* Iconos */
+  .dashboard-icon {
+    margin-bottom: 15px;
+    color: #fff;
+  }
+  
+  /* Títulos */
+  .dashboard-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  /* Botones */
+  .dashboard-button {
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 10px 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .dashboard-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .purple-button {
+    background-color: #fff;
+    color: #6a0dad;
+  }
+  
+  .purple-button:hover {
+    background-color: #6a0dad;
+    color: #fff;
+  }
+  
+  .blue-button {
+    background-color: #fff;
+    color: #007bff;
+  }
+  
+  .blue-button:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  /* Botón Volver */
+  .back-button {
+    margin: 10px;
+  }
+  
+  .back-button button {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  
+  .back-button button:hover {
+    text-decoration: underline;
+  }

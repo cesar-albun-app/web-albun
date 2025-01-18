@@ -1,0 +1,178 @@
+/* Fondo general */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Contenedor del encabezado */
+.scheduler-header {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #4b0082;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.scheduler-header h4 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+/* Calendario personalizado */
+
+
+.react-calendar {
+  border: none;
+}
+
+.react-calendar__tile {
+  font-size: 1rem;
+  padding: 10px;
+  border-radius: 10px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  color: #4b0082;
+}
+
+.react-calendar__tile--now {
+  background: #8a2be2;
+  color: #fff;
+}
+
+.react-calendar__tile--now:hover {
+  background: #6a0dad;
+  transform: scale(1.05);
+}
+
+.react-calendar__tile--active {
+  background: #4b0082;
+  color: #fff;
+}
+
+.react-calendar__tile--active:hover {
+  background: #3a006a;
+  transform: scale(1.05);
+}
+
+.react-calendar__tile:hover {
+  background: #f5f5f5;
+  color: #8a2be2;
+  transform: scale(1.05);
+}
+
+/* Accordion (Tarjetas) */
+.day-accordion {
+  border: none;
+}
+
+.day-accordion .accordion-item {
+  border: none;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffffff, #f9f9f9);
+  animation: fadeInUp 0.8s ease-in-out;
+}
+
+.day-accordion .accordion-header {
+  color: #fff;
+  padding: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.day-accordion .accordion-header:hover {
+  background: #6a0dad;
+}
+
+.day-accordion .accordion-body {
+  background: #f8f9fa;
+  padding: 20px;
+  color: #333;
+  border-top: 1px solid #ddd;
+}
+
+/* Botones */
+.save-button {
+  display: block;
+  margin: 20px auto;
+  background: linear-gradient(90deg, #4b0082, #8a2be2);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 25px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.save-button:hover {
+  background: linear-gradient(90deg, #6a0dad, #4b0082);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.action-button {
+  border-radius: 20px;
+  font-weight: bold;
+  padding: 7px 15px;
+  font-size: 0.9rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.action-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Tabla */
+.schedule-table {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 0.8s ease-in-out;
+}
+
+.schedule-table thead {
+  background: #4b0082;
+  color: #fff;
+}
+
+.schedule-table th,
+.schedule-table td {
+  text-align: center;
+  padding: 15px;
+  font-size: 1rem;
+  vertical-align: middle;
+}
+
+.schedule-table tr:hover {
+  background: #f9f9f9;
+  transition: background-color 0.3s ease;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

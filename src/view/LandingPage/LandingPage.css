@@ -1,30 +1,113 @@
-.animated-btn {
-    display: inline-block;
-    position: relative;
-    padding: 10px 20px;
-    color: white;
-    text-decoration: none;
-    overflow: hidden;
-    transition: background-color 0.4s, color 0.4s;
+body {
+  background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-dark .navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.landing-hero {
+  background: linear-gradient(to right, #007bff, #6610f2);
+  color: #fff;
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.landing-title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.landing-subtitle {
+  font-size: 1.2rem;
+}
+
+.landing-section-title {
+  font-size: 2rem;
+  color: #4b0082;
+  margin-bottom: 20px;
+}
+
+.landing-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+}
+
+.landing-cta {
+  background-color: #e9ecef;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.landing-footer {
+  background-color: #343a40;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.landing-btn {
+  background: linear-gradient(90deg, #6a0dad, #8a2be2);
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.landing-btn:hover {
+  background: linear-gradient(90deg, #8a2be2, #6a0dad);
+}
+/* Estilo base de las tarjetas */
+.landing-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  transform: translateY(0) scale(1) rotate(0deg);
+  transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease;
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Animación de hover */
+.landing-card:hover {
+  transform: translateY(-15px) scale(1.05) rotate(-1deg);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 255, 255, 1); /* Aumentar opacidad al 100% */
+}
+
+/* Animación de entrada */
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
   }
-  
-  .animated-btn::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.2);
-    transition: width 0.4s ease-in-out;
-    z-index: 0;
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
-  
-  .animated-btn:hover {
-    background-color: #020004;
-    color: white
-  }
-  
-  .animated-btn:hover::before {
-    width: 100%;
-  }
+}
+
+/* Agregar un ligero retraso entre las tarjetas */
+.landing-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.landing-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.landing-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.landing-card:nth-child(4) {
+  animation-delay: 0.4s;
+}

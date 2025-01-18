@@ -1,0 +1,79 @@
+/* Contenedor general */
+.scheduler-container {
+    padding: 20px;
+    background: linear-gradient(135deg, #e0c3fc, #8ec5fc); /* Manteniendo el fondo morado */
+    border-radius: 15px;
+    animation: fadeIn 0.8s ease-in-out;
+  }
+  
+  /* Título del componente */
+  .scheduler-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #4b0082; /* Morado oscuro para el título */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+  }
+  
+  /* Estilo para los Tabs */
+  .custom-tabs .nav-tabs {
+    border-bottom: none;
+    justify-content: center;
+  }
+  
+  .custom-tabs .nav-link {
+    color: #4b0082; /* Manteniendo el morado oscuro */
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 30px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .custom-tabs .nav-link.active {
+    background: linear-gradient(90deg, #4b0082, #6a0dad); /* Gradiente morado */
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  .custom-tabs .nav-link:hover {
+    background: #f1e9fe; /* Ligero morado para hover */
+    color: #4b0082;
+    transform: translateY(-2px);
+  }
+  
+  /* Contenido del Tab */
+  .tab-content {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 0.8s ease-in-out;
+  }
+  
+  /* Animaciones */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }

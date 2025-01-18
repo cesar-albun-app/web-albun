@@ -3,16 +3,13 @@ import UpdateGenericDb from "../../components/UpdateGenericDb";
 import PhotoUpload from "../../components/PhotoUpload";
 import PhotoGalleryOpener from "../LoadingPage/PhotoGalleryOpener";
 import ViewGalleryGeneric from "./ViewGalleryGeneric";
-import ImportMasivo from './ImportMasivo'
+import ImportMasivo from "./ImportMasivo";
+import styles from "./styles/UpdateImagesGeneric.module.css"; // CSS Module
 
 export default function UpdateImagesGeneric(userData) {
-  
-  const {domain,logo,primaryColor,secondaryColor}=userData.userData
+  const { domain } = userData.userData;
 
-  // Estado para la pestaña activa
-  const [activeTab, setActiveTab] = useState("addImage"); // 'addImage' o 'viewProducts'
-
-  // Estado para la carga de imágenes en la primera sección
+  const [activeTab, setActiveTab] = useState("addImage"); // Estado de la pestaña activa
   const [uploadImages, setUploadImages] = useState([]);
 
   useEffect(() => {
@@ -32,83 +29,44 @@ export default function UpdateImagesGeneric(userData) {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       {/* Barra de Pestañas */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginBottom: "20px",
-          borderBottom: "2px solid #ddd",
-        }}
-      >
+      <div className={styles.tabsContainer}>
         <button
           onClick={() => setActiveTab("addImage")}
-          style={{
-            padding: "10px 20px",
-            border: "none",
-            borderBottom: activeTab === "addImage" ? "2px solid #4A90E2" : "none",
-            backgroundColor: "transparent",
-            fontWeight: "bold",
-            color: activeTab === "addImage" ? "#4A90E2" : "#555",
-            cursor: "pointer",
-          }}
+          className={`${styles.tabButton} ${
+            activeTab === "addImage" ? styles.activeTab : ""
+          }`}
         >
           Agrega
         </button>
         <button
           onClick={() => setActiveTab("viewProducts")}
-          style={{
-            padding: "10px 20px",
-            border: "none",
-            borderBottom:
-              activeTab === "viewProducts" ? "2px solid #4A90E2" : "none",
-            backgroundColor: "transparent",
-            fontWeight: "bold",
-            color: activeTab === "viewProducts" ? "#4A90E2" : "#555",
-            cursor: "pointer",
-          }}
+          className={`${styles.tabButton} ${
+            activeTab === "viewProducts" ? styles.activeTab : ""
+          }`}
         >
           Ver
         </button>
         <button
           onClick={() => setActiveTab("viewMaxi")}
-          style={{
-            padding: "10px 20px",
-            border: "none",
-            borderBottom:
-              activeTab === "viewMaxi" ? "2px solid #4A90E2" : "none",
-            backgroundColor: "transparent",
-            fontWeight: "bold",
-            color: activeTab === "viewMaxi" ? "#4A90E2" : "#555",
-            cursor: "pointer",
-          }}
+          className={`${styles.tabButton} ${
+            activeTab === "viewMaxi" ? styles.activeTab : ""
+          }`}
         >
-          Importar excel
+          Importar Excel
         </button>
       </div>
 
       {/* Contenido de la Pestaña Activa */}
       {activeTab === "addImage" && (
         <PhotoUpload>
-          <h2
-            style={{
-              textAlign: "center",
-              fontSize: "2em",
-              color: "#4A90E2",
-              marginTop: "20px",
-              fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-            }}
-          >
-            Agrega Imagen
-          </h2>
-
+          <h2 className={styles.sectionTitle}>Agrega Imagen</h2>
           <PhotoGalleryOpener
             selectedImages={uploadImages}
             setSelectedImages={setUploadImages}
             handleClearImages={handleClearUploadImages}
           />
-
           <UpdateGenericDb
             handleClearImages={handleClearUploadImages}
             selectedImages={uploadImages}
@@ -119,34 +77,15 @@ export default function UpdateImagesGeneric(userData) {
 
       {activeTab === "viewProducts" && (
         <PhotoUpload>
-          <h2
-            style={{
-              textAlign: "center",
-              fontSize: "2em",
-              color: "#4A90E2",
-              marginTop: "20px",
-              fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-            }}
-          >
-            Ver Productos
-          </h2>
+          <h2 className={styles.sectionTitle}>Ver Productos</h2>
           <ViewGalleryGeneric domain={domain} />
         </PhotoUpload>
       )}
-       {activeTab === "viewMaxi" && (
+
+      {activeTab === "viewMaxi" && (
         <PhotoUpload>
-          <h2
-            style={{
-              textAlign: "center",
-              fontSize: "2em",
-              color: "#4A90E2",
-              marginTop: "20px",
-              fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-            }}
-          >
-            Importar Maxivo
-          </h2>
-          <ImportMasivo  domain={domain} />
+          <h2 className={styles.sectionTitle}>Importar Masivo</h2>
+          <ImportMasivo domain={domain} />
         </PhotoUpload>
       )}
     </div>

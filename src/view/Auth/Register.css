@@ -1,0 +1,68 @@
+body {
+  background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+}
+
+.register-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}
+
+.register-title {
+  font-size: 2rem;
+  color: #4b0082;
+  font-weight: bold;
+  text-align: center;
+}
+
+.register-input {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.register-input:focus {
+  border-color: #4b0082;
+  box-shadow: 0 0 8px rgba(75, 0, 130, 0.2);
+}
+
+.register-button {
+  background: linear-gradient(90deg, #6a0dad, #8a2be2);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 10px;
+  transition: transform 0.3s ease;
+  width: 100%;
+}
+
+.register-button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #8a2be2, #6a0dad);
+}
+
+.register-preview-logo {
+  display: block;
+  margin: 20px auto;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  object-fit: cover;
+}
+
+.register-color-picker {
+  border-radius: 8px;
+  padding: 5px;
+  width: 100%;
+  height: 40px;
+  cursor: pointer;
+}

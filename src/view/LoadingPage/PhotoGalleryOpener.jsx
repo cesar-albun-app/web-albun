@@ -1,12 +1,6 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Card,
-  Row,
-  Col,
-  ProgressBar,
-  CloseButton,
-} from "react-bootstrap";
+import { Button, Card, Row, Col, ProgressBar, CloseButton } from "react-bootstrap";
+import styles from "../GenericMobileScreen/styles/PhotoGalleryOpener.module.css"
 
 const PhotoGalleryOpener = ({
   setSelectedImages,
@@ -31,7 +25,6 @@ const PhotoGalleryOpener = ({
         }, index * 1000); // Simula un retardo de carga
       });
 
-      // Oculta la barra de progreso después de que todas las imágenes se hayan cargado
       setTimeout(() => {
         setProgress(0);
       }, filesArray.length * 1000 + 500);
@@ -39,46 +32,37 @@ const PhotoGalleryOpener = ({
   };
 
   const handleRemoveImage = (index) => {
-    const updatedImages = Array.isArray(selectedImages)
-      ? selectedImages.filter((_, i) => i !== index)
-      : [];
+    const updatedImages = selectedImages.filter((_, i) => i !== index);
     setSelectedImages(updatedImages);
   };
 
   return (
-    <div className="text-center">
+    <div className={styles.container}>
       <input
         type="file"
         accept="image/*"
         id="fileInput"
         multiple
-        style={{ display: "none" }}
+        className={styles.fileInput}
         onChange={handleImageChange}
       />
 
-      <div className="d-flex justify-content-center mb-3">
+      <div className={styles.buttonContainer}>
         <Button
           onClick={() => document.getElementById("fileInput").click()}
           variant="success"
-          style={{
-            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-            backgroundColor: Array.isArray(selectedImages) && selectedImages.length > 0 ? "gray" : "green",
-            borderColor: Array.isArray(selectedImages) && selectedImages.length > 0 ? "gray" : "green",
-          }}
-          disabled={Array.isArray(selectedImages) && selectedImages.length > 0}
+          className={`${styles.button} ${selectedImages.length > 0 && styles.disabledButton}`}
+          disabled={selectedImages.length > 0}
         >
           Agregar
         </Button>
         <Button
           onClick={handleClearImages}
           variant="danger"
-          style={{
-            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-            marginLeft: "10px",
-            backgroundColor: !Array.isArray(selectedImages) || selectedImages.length === 0 ? "gray" : "red",
-            borderColor: !Array.isArray(selectedImages) || selectedImages.length === 0 ? "gray" : "red",
-          }}
-          disabled={!Array.isArray(selectedImages) || selectedImages.length === 0}
+          className={`${styles.button} ${
+            selectedImages.length === 0 && styles.disabledButton
+          }`}
+          disabled={selectedImages.length === 0}
         >
           Borrar
         </Button>
@@ -88,33 +72,26 @@ const PhotoGalleryOpener = ({
         <ProgressBar
           now={progress}
           label={`${Math.round(progress)}%`}
-          className="mb-3"
+          className={styles.progressBar}
         />
       )}
 
-      {Array.isArray(selectedImages) && selectedImages.length > 0 && (
-        <div className="mt-4">
-          <h3
-            style={{ color: "black", fontSize: "20px", marginBottom: "10px" }}
-          >
-            Imágenes seleccionadas:
-          </h3>
+      {selectedImages.length > 0 && (
+        <div className={styles.gallery}>
+          <h3 className={styles.title}>Imágenes seleccionadas:</h3>
           <Row className="justify-content-center">
             {selectedImages.map((image, index) => (
-              <Col md={6} lg={4} className="mb-3" key={index}>
-                <Card style={{ position: "relative" }}>
+              <Col md={6} lg={4} className={`${styles.imageCol}`} key={index}>
+                <Card className={`${styles.card} ${styles.imageCard}`}>
                   <CloseButton
-                    style={{
-                      position: "absolute",
-                      top: "10px",
-                      right: "10px",
-                      zIndex: 1,
-                      backgroundColor: "white",
-                      cursor: "pointer",
-                    }}
+                    className={styles.closeButton}
                     onClick={() => handleRemoveImage(index)}
                   />
-                  <Card.Img src={image} alt={`Seleccionada ${index + 1}`} />
+                  <Card.Img
+                    src={image}
+                    alt={`Seleccionada ${index + 1}`}
+                    className={styles.image}
+                  />
                 </Card>
               </Col>
             ))}

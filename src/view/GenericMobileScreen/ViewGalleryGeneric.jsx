@@ -8,11 +8,19 @@ import {
   doc,
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { Container, Table, Button, Form, Spinner, Dropdown } from "react-bootstrap";
+import {
+  Container,
+  Table,
+  Button,
+  Form,
+  Spinner,
+  Dropdown,
+} from "react-bootstrap";
 
 import PhotoGalleryOpener from "../LoadingPage/PhotoGalleryOpener";
+import styles from "./styles/ViewGalleryGeneric.module.css";
 
-const ViewGalleryGeneric = ({domain}) => {
+const ViewGalleryGeneric = ({ domain }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingProductId, setEditingProductId] = useState(null);
@@ -29,11 +37,14 @@ const ViewGalleryGeneric = ({domain}) => {
     Promotions: "Promociones",
   };
 
-  const tableActive=domain
+  const tableActive = domain;
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, `applicationsBase/StoreInventory/${tableActive}`));
+        const querySnapshot = await getDocs(
+          collection(db, `applicationsBase/StoreInventory/${tableActive}`)
+        );
         const data = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -96,7 +107,11 @@ const ViewGalleryGeneric = ({domain}) => {
       }
 
       const updatedProduct = { ...editableData, images: updatedImages };
-      const productRef = doc(db, `applicationsBase/StoreInventory/${tableActive}`, editingProductId);
+      const productRef = doc(
+        db,
+        `applicationsBase/StoreInventory/${tableActive}`,
+        editingProductId
+      );
       await updateDoc(productRef, updatedProduct);
 
       setProducts((prev) =>
@@ -124,8 +139,7 @@ const ViewGalleryGeneric = ({domain}) => {
   if (loading) {
     return (
       <Container
-        className="d-flex justify-content-center align-items-center"
-        style={{ height: "100vh" }}
+        className={`${styles.loadingContainer} d-flex justify-content-center align-items-center`}
       >
         <Spinner animation="border" />
       </Container>
@@ -133,11 +147,10 @@ const ViewGalleryGeneric = ({domain}) => {
   }
 
   return (
-    <Container className="pt-4">
-      <h2 className="text-center mb-4">Productos</h2>
+    <Container className={`${styles.container} pt-4`}>
+      <h2 className={`${styles.title} text-center mb-4`}>Productos</h2>
 
-      {/* Filtro de Categoría */}
-      <div className="d-flex justify-content-between align-items-center mb-4">
+      <div className={`${styles.filterContainer} mb-4`}>
         <Dropdown>
           <Dropdown.Toggle variant="primary" id="dropdown-basic">
             Filtrar por Categoría
@@ -154,33 +167,14 @@ const ViewGalleryGeneric = ({domain}) => {
             ))}
           </Dropdown.Menu>
         </Dropdown>
-        <span
-          style={{
-            fontSize: "1rem",
-            fontWeight: "bold",
-            color: "#333",
-          }}
-        >
+        <span className={styles.filterLabel}>
           {categoryTranslations[filteredCategory] || filteredCategory}
         </span>
       </div>
 
-      {/* Tabla de Productos */}
-      <div
-        style={{
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          borderRadius: "10px",
-          overflow: "hidden",
-
-        }}
-      >
-        <Table  bordered  responsive className="table-modern">
-          <thead
-            style={{
-              backgroundColor: "red",
-              borderBottom: "2px solid #dee2e6",
-            }}
-          >
+      <div className={styles.tableContainer}>
+        <Table bordered responsive className={styles.table}>
+          <thead>
             <tr>
               <th>#</th>
               <th>Imagen</th>
@@ -206,7 +200,7 @@ const ViewGalleryGeneric = ({domain}) => {
                     <img
                       src={product.images?.[0] || "https://via.placeholder.com/50"}
                       alt={product.productName}
-                      style={{ width: "50px", height: "50px", objectFit: "cover" }}
+                      className={styles.productImage}
                     />
                   )}
                 </td>
@@ -267,14 +261,13 @@ const ViewGalleryGeneric = ({domain}) => {
                     `$${product.amount}`
                   )}
                 </td>
-                <td style={{ display: "flex", gap: "5px", justifyContent: "center" }}>
+                <td className={styles.actionButtons}>
                   {editingProductId === product.id ? (
                     <>
                       <Button
                         variant="success"
                         size="sm"
                         onClick={handleEditSave}
-                        style={{ minWidth: "80px" }}
                         disabled={savingProductId === editingProductId}
                       >
                         {savingProductId === editingProductId ? (
@@ -287,7 +280,6 @@ const ViewGalleryGeneric = ({domain}) => {
                         variant="secondary"
                         size="sm"
                         onClick={handleEditCancel}
-                        style={{ minWidth: "80px" }}
                       >
                         Cancelar
                       </Button>
@@ -298,7 +290,6 @@ const ViewGalleryGeneric = ({domain}) => {
                         variant="dark"
                         size="sm"
                         onClick={() => handleEditStart(product)}
-                        style={{ minWidth: "80px" }}
                       >
                         Editar
                       </Button>
@@ -306,7 +297,6 @@ const ViewGalleryGeneric = ({domain}) => {
                         variant="danger"
                         size="sm"
                         onClick={() => handleDelete(product.id)}
-                        style={{ minWidth: "80px" }}
                         disabled={deletingProductId === product.id}
                       >
                         {deletingProductId === product.id ? (

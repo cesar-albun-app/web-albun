@@ -1,0 +1,67 @@
+.container {
+    background: linear-gradient(135deg, #f5f7fa, #e4eef1);
+    border-radius: 15px;
+    padding: 20px;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .filterContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .uploadLabel {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .uploadLabel:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+  }
+  
+  .hiddenInput {
+    display: none;
+  }
+  
+  .tableContainer {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .table {
+    text-align: center;
+  }
+  
+  .tableRow:hover {
+    background-color: #f8f9fa;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .progressBar {
+    height: 20px;
+    font-size: 1rem;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }

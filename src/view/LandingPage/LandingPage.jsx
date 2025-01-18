@@ -2,13 +2,13 @@ import React from "react";
 import { Container, Row, Col, Button, Card, Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaCalendarAlt, FaQrcode, FaWhatsapp, FaLaptop } from "react-icons/fa";
-import "./LandingPage.css"; // Archivo CSS externo para las animaciones
+import "./LandingPage.css"; // Estilos externos
 
 const LandingPage = () => {
   return (
     <div>
       {/* Header */}
-      <Navbar bg="dark" variant="dark" expand="lg" className="mb-6">
+      <Navbar bg="dark" variant="dark" expand="lg" className="shadow-lg">
         <Container>
           <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
             {/* Logo SVG */}
@@ -28,28 +28,15 @@ const LandingPage = () => {
                 d="M50 35c-5 0-9 4-9 9s4 9 9 9 9-4 9-9-4-9-9-9z"
                 fill="#343a40"
               />
-              <line x1="50" y1="25" x2="50" y2="15" stroke="#fff" strokeWidth="2" />
-              <line x1="50" y1="75" x2="50" y2="85" stroke="#fff" strokeWidth="2" />
-              <line x1="64" y1="50" x2="74" y2="50" stroke="#fff" strokeWidth="2" />
-              <line x1="36" y1="50" x2="26" y2="50" stroke="#fff" strokeWidth="2" />
-              <text
-                x="50"
-                y="95"
-                textAnchor="middle"
-                fontSize="12"
-                fontFamily="Arial, sans-serif"
-                fill="#fff"
-              >
-                FlexiApp
-              </text>
             </svg>
             FlexiApp
           </Navbar.Brand>
           <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/login" className="animated-btn text-light">
+            <Nav.Link as={Link} to="/login" className="landing-btn">
               Iniciar Sesión
             </Nav.Link>
-            <Nav.Link as={Link} to="/register" className="animated-btn text-light">
+            <div style={{marginLeft:"10px"}}/>
+            <Nav.Link as={Link} to="/register" className="landing-btn">
               Registrarse
             </Nav.Link>
           </Nav>
@@ -57,17 +44,10 @@ const LandingPage = () => {
       </Navbar>
 
       {/* Hero Section */}
-      <div
-        style={{
-          background: "linear-gradient(to right, #007bff, #6610f2)",
-          color: "#fff",
-          textAlign: "center",
-          padding: "100px 20px",
-        }}
-      >
+      <div className="landing-hero">
         <Container>
-          <h1 className="mb-4">Bienvenido a FlexiApp</h1>
-          <p className="lead mb-4">
+          <h1 className="landing-title">Bienvenido a FlexiApp</h1>
+          <p className="landing-subtitle">
             Gestiona tu negocio, personaliza tu tienda y envía pedidos a través de WhatsApp con nuestra plataforma.
           </p>
         </Container>
@@ -75,10 +55,10 @@ const LandingPage = () => {
 
       {/* Features Section */}
       <Container className="my-5">
-        <h2 className="text-center mb-4">Lo que ofrecemos</h2>
+        <h2 className="text-center landing-section-title">Lo que ofrecemos</h2>
         <Row>
           <Col md={3} className="mb-4">
-            <Card className="h-100 text-center shadow-sm">
+            <Card className="landing-card h-100 text-center">
               <Card.Body>
                 <FaCalendarAlt size={50} className="text-primary mb-3" />
                 <Card.Title>Sistemas de Citas Programados</Card.Title>
@@ -89,7 +69,7 @@ const LandingPage = () => {
             </Card>
           </Col>
           <Col md={3} className="mb-4">
-            <Card className="h-100 text-center shadow-sm">
+            <Card className="landing-card h-100 text-center">
               <Card.Body>
                 <FaQrcode size={50} className="text-success mb-3" />
                 <Card.Title>Carta Digital</Card.Title>
@@ -100,7 +80,7 @@ const LandingPage = () => {
             </Card>
           </Col>
           <Col md={3} className="mb-4">
-            <Card className="h-100 text-center shadow-sm">
+            <Card className="landing-card h-100 text-center">
               <Card.Body>
                 <FaWhatsapp size={50} className="text-warning mb-3" />
                 <Card.Title>Tienda para Pedidos por WhatsApp</Card.Title>
@@ -111,7 +91,7 @@ const LandingPage = () => {
             </Card>
           </Col>
           <Col md={3} className="mb-4">
-            <Card className="h-100 text-center shadow-sm">
+            <Card className="landing-card h-100 text-center">
               <Card.Body>
                 <FaLaptop size={50} className="text-info mb-3" />
                 <Card.Title>Backoffice</Card.Title>
@@ -125,33 +105,20 @@ const LandingPage = () => {
       </Container>
 
       {/* Call to Action */}
-      <div
-        style={{
-          backgroundColor: "#e9ecef",
-          padding: "50px 20px",
-          textAlign: "center",
-        }}
-      >
+      <div className="landing-cta">
         <Container>
           <h2 className="mb-4">Empieza tu transformación digital</h2>
           <p className="lead mb-4">
             Lleva tu negocio al siguiente nivel con nuestra solución integral y fácil de usar.
           </p>
-          <Button variant="primary" size="lg" as={Link} to="/register" className="animated-btn">
+          <Button variant="primary" size="lg" as={Link} to="/register" className="landing-btn">
             Registrarme Ahora
           </Button>
         </Container>
       </div>
 
       {/* Footer */}
-      <footer
-        style={{
-          backgroundColor: "#343a40",
-          color: "#fff",
-          padding: "20px 0",
-          textAlign: "center",
-        }}
-      >
+      <footer className="landing-footer">
         <Container>
           <p className="mb-0">
             &copy; {new Date().getFullYear()} FlexiApp. Todos los derechos reservados.

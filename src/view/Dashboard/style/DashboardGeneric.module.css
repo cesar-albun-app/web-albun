@@ -1,0 +1,113 @@
+/* Contenedor de las tarjetas */
+.cardCol {
+  padding: 0;
+
+
+}
+
+/* Estilos base para las tarjetas */
+.dashboardCard {
+  background: #6e3737;
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-right: 20px;
+}
+
+.dashboardCard:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos para los íconos */
+.dashboardIcon {
+  margin-bottom: 15px;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.dashboardCard:hover .dashboardIcon {
+  transform: scale(1.2);
+}
+
+/* Títulos */
+.dashboardTitle {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Botones */
+.dashboardButton {
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.dashboardButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Colores específicos para las tarjetas */
+.yellowCard {
+  background-color: #ffcf5c;
+  color: #fff;
+}
+
+.yellowCard .dashboardIcon {
+  color: #fff;
+}
+
+.yellowButton {
+  background-color: #fff;
+  color: #ffcf5c;
+}
+
+.yellowButton:hover {
+  background-color: #ffcf5c;
+  color: #fff;
+}
+
+.blueCard {
+  background-color: #5bc0de;
+  color: #fff;
+}
+
+.blueCard .dashboardIcon {
+  color: #fff;
+}
+
+.blueButton {
+  background-color: #fff;
+  color: #5bc0de;
+}
+
+.blueButton:hover {
+  background-color: #5bc0de;
+  color: #fff;
+}
+
+.greenCard {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.greenCard .dashboardIcon {
+  color: #fff;
+}
+
+.greenButton {
+  background-color: #fff;
+  color: #28a745;
+}
+
+.greenButton:hover {
+  background-color: #28a745;
+  color: #fff;
+}
+
