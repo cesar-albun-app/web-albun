@@ -27,8 +27,12 @@ const UserScheduler = ({ domain, email }) => {
   const [isBooking, setIsBooking] = useState(false);
   const { sendEmail, loading, error, success } = useEmailSender();
   const [show, setShow] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
 
   const fetchSchedulerDays = async () => {
+    setIsFetching(true); // Inicia el spinner
+
+
     try {
       const querySnapshot = await getDocs(
         collection(db, `applicationsBase/schedulers/${domain}`)
@@ -46,6 +50,9 @@ const UserScheduler = ({ domain, email }) => {
       setDaySchedules(schedules);
     } catch (error) {
       console.error("Error al cargar días de Scheduler:", error);
+    }
+    finally {
+      setIsFetching(false); // Detiene el spinner
     }
   };
 
@@ -110,7 +117,7 @@ const UserScheduler = ({ domain, email }) => {
       setShowBookingModal(false);
       setBookingInfo({ name: "", email: "", phone: "", time: "" });
       sendEmailActions();
-      setShow(true)
+      setShow(true);
     }
   };
 
@@ -135,19 +142,16 @@ const UserScheduler = ({ domain, email }) => {
       additionalText: "Muchas gracias por tu pronta respuesta.",
     });
 
-
     const messageUser = `Solicitaste un turno el día  ${formattedDate}. Muchas gracias`;
 
     sendEmail({
       recipient: bookingInfo.email,
       senderName: bookingInfo.name,
-      senderPhone:bookingInfo.phone,
+      senderPhone: bookingInfo.phone,
       subject: "Tienes Una Turno solicitado",
       message: messageUser,
       additionalText: "Muchas gracias.",
-    }); 
-
-
+    });
   };
 
   useEffect(() => {
@@ -156,13 +160,15 @@ const UserScheduler = ({ domain, email }) => {
 
   return (
     <>
-          <ConfirmationModal show={show} setShow={setShow} />
+      <ConfirmationModal show={show} setShow={setShow} />
       <div className="calendar-legend">
         <FaCheckCircle className="legend-icon" />
         <span className="legend-text">
           Los días con turnos disponibles están marcados con este ícono.
         </span>
+        <div className="refresh-container"></div>
       </div>
+
       <div className="week-selector-container">
         <h5 className="week-selector-title">Selecciona una semana</h5>
 
@@ -187,6 +193,29 @@ const UserScheduler = ({ domain, email }) => {
             }
           }}
         />
+       <Button
+  variant="primary"
+  onClick={() => {
+    fetchSchedulerDays();
+  }}
+  disabled={isFetching} // Desactiva el botón mientras está cargando
+>
+  {isFetching ? (
+    <>
+      <Spinner
+        as="span"
+        animation="border"
+        size="sm"
+        role="status"
+        aria-hidden="true"
+        className="me-2"
+      />
+      Actualizando...
+    </>
+  ) : (
+    "Actualizar Horarios"
+  )}
+</Button>
       </div>
 
       {selectedDay && (

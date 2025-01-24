@@ -19,13 +19,14 @@ import {
   Col,
   Offcanvas,
   Nav,
-  Table
+  Table,
 } from "react-bootstrap";
 import { FaBars } from "react-icons/fa";
 import "./UserPage.css";
-import PatientTable from './PatientTable'
+import PatientTable from "./PatientTable";
 
-const UserPage = () => {
+const UserPage = (userData) => {
+  const { domain } = userData.userData;
   const [patients, setPatients] = useState([]);
   const [showMenu, setShowMenu] = useState(false); // Estado para mostrar el menú lateral
 
@@ -59,7 +60,10 @@ const UserPage = () => {
   });
   const [isSaving, setIsSaving] = useState(false);
 
-  const patientsCollection = collection(db, "Patients");
+  const patientsCollection = collection(
+    db,
+    `applicationsBase/patients/${domain}`
+  );
 
   // Fetch patients from Firestore
   const fetchPatients = async () => {
@@ -80,7 +84,7 @@ const UserPage = () => {
     try {
       const consultationsCollection = collection(
         db,
-        `Patients/${patientId}/Consultations`
+         `applicationsBase/consultations/${domain}/${patientId}/Consultations`
       );
       const querySnapshot = await getDocs(consultationsCollection);
       const data = querySnapshot.docs.map((doc) => ({
@@ -95,7 +99,6 @@ const UserPage = () => {
 
   const handleSaveConsultation = async () => {
     setIsSaving(true); // Activar el estado de guardado
-  
     const {
       date,
       details,
@@ -106,16 +109,17 @@ const UserPage = () => {
       image1,
       image2,
     } = newConsultation;
-  
+
     try {
       const consultationsCollection = collection(
         db,
-        `Patients/${selectedPatient.id}/Consultations`
+        `applicationsBase/consultations/${domain}/${selectedPatient.id}/Consultations`
+
       );
-  
+
       let image1Url = null;
       let image2Url = null;
-  
+
       // Subir imágenes si existen
       if (image1 instanceof File) {
         const image1Ref = ref(
@@ -125,7 +129,7 @@ const UserPage = () => {
         await uploadBytes(image1Ref, image1);
         image1Url = await getDownloadURL(image1Ref);
       }
-  
+
       if (image2 instanceof File) {
         const image2Ref = ref(
           storage,
@@ -134,7 +138,7 @@ const UserPage = () => {
         await uploadBytes(image2Ref, image2);
         image2Url = await getDownloadURL(image2Ref);
       }
-  
+
       const consultationData = {
         date: date || null,
         details: details || null,
@@ -145,11 +149,11 @@ const UserPage = () => {
         image1: image1Url,
         image2: image2Url,
       };
-  
+
       if (isEditConsultationMode) {
         const consultationRef = doc(
           db,
-          `Patients/${selectedPatient.id}/Consultations/${editingConsultationId}`
+           `applicationsBase/consultations/${domain}/${selectedPatient.id}/Consultations/${editingConsultationId}`
         );
         await updateDoc(consultationRef, consultationData);
         alert("Consulta actualizada con éxito.");
@@ -157,7 +161,7 @@ const UserPage = () => {
         await addDoc(consultationsCollection, consultationData);
         alert("Consulta agregada con éxito.");
       }
-  
+
       setShowConsultationModal(false);
       setNewConsultation({
         date: "",
@@ -184,7 +188,7 @@ const UserPage = () => {
       try {
         const consultationRef = doc(
           db,
-          `Patients/${selectedPatient.id}/Consultations/${consultationId}`
+          `applicationsBase/consultations/${domain}/${selectedPatient.id}/Consultations/${consultationId}`
         );
         await deleteDoc(consultationRef);
         alert("Consulta eliminada con éxito.");
@@ -197,8 +201,6 @@ const UserPage = () => {
 
   // Open the modal for editing a consultation
   const handleEditConsultation = (consultation) => {
-    console.log("consultation: ", consultation);
-
     setIsEditConsultationMode(true);
     setEditingConsultationId(consultation.id);
     setNewConsultation({
@@ -216,15 +218,16 @@ const UserPage = () => {
 
   // Add or update a patient
   const handleSavePatient = async () => {
-    const { firstName, lastName, age, phone, email, image, details } = newPatient;
-  
+    const { firstName, lastName, age, phone, email, image, details } =
+      newPatient;
+
     if (!firstName || !lastName || !age || !phone || !email || !details) {
       alert("Por favor, completa todos los campos.");
       return;
     }
-  
+
     setIsSaving(true);
-  
+
     try {
       let imageUrl = newPatient.image;
       if (image instanceof File) {
@@ -232,9 +235,13 @@ const UserPage = () => {
         await uploadBytes(imageRef, image);
         imageUrl = await getDownloadURL(imageRef);
       }
-  
+
       if (isEditMode) {
-        const patientRef = doc(db, "Patients", editingPatientId);
+        console.log("aqui: ", isEditMode);
+        const patientRef = doc(
+          db,
+          `applicationsBase/patients/${domain}/${editingPatientId}`
+        );
         await updateDoc(patientRef, {
           firstName,
           lastName,
@@ -257,7 +264,7 @@ const UserPage = () => {
         });
         alert("Paciente agregado con éxito.");
       }
-  
+
       setShowModal(false);
       setNewPatient({
         firstName: "",
@@ -281,7 +288,7 @@ const UserPage = () => {
   const handleDeletePatient = async (id) => {
     if (window.confirm("¿Estás seguro de que deseas eliminar este paciente?")) {
       try {
-        const patientRef = doc(db, "Patients", id);
+        const patientRef = doc(db, `applicationsBase/patients/${domain}/${id}`);
         await deleteDoc(patientRef);
         alert("Paciente eliminado con éxito.");
         fetchPatients();
@@ -302,13 +309,14 @@ const UserPage = () => {
       phone: patient.phone,
       image: patient.image,
       details: patient.details,
-      email:patient.email,
+      email: patient.email,
     });
     setShowModal(true);
   };
 
   // Open the sidebar for patient details
   const handleViewDetails = (patient) => {
+    console.log("patient: ", patient);
     setSelectedPatient(patient);
     setShowSidebar(true);
     fetchConsultations(patient.id);
@@ -341,10 +349,10 @@ const UserPage = () => {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Nav className="flex-column">
-            <Nav.Link href="/scheduler">Turnos</Nav.Link>
-            <Nav.Link href="/docKarla">Mi Tienda</Nav.Link>
-            <Nav.Link href="/karlaScreem">Cragar Productos</Nav.Link>
-            <Nav.Link href="#configuracion">Configuración</Nav.Link>
+            <Nav.Link href="/schedulerGeneric">Turnos</Nav.Link>
+            <Nav.Link href={`/${domain}`}>Mi Tienda</Nav.Link>            
+            <Nav.Link href="/genericRoute">Cragar Productos</Nav.Link>
+            <Nav.Link href="/dashboard">Salir</Nav.Link>
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
@@ -369,9 +377,12 @@ const UserPage = () => {
         Agregar Paciente
       </Button>
 
-      <PatientTable patients={patients} handleEditPatient={handleEditPatient} handleDeletePatient={handleDeletePatient} handleViewDetails={handleViewDetails}    />
-
-     
+      <PatientTable
+        patients={patients}
+        handleEditPatient={handleEditPatient}
+        handleDeletePatient={handleDeletePatient}
+        handleViewDetails={handleViewDetails}
+      />
 
       {/* Sidebar para ver detalles */}
       <Offcanvas
@@ -392,9 +403,9 @@ const UserPage = () => {
               <p>
                 <strong>Teléfono:</strong> {selectedPatient.phone}
               </p>
-              <p>
-                <strong>Detalles:</strong> {selectedPatient.details}
-              </p>
+              <p className="justified-text">
+  <strong>Detalles:</strong> {selectedPatient.details}
+</p>
               <Button
                 variant="success"
                 onClick={() => {
@@ -425,8 +436,7 @@ const UserPage = () => {
                         <strong>Próxima Consulta:</strong>{" "}
                         {consultation.nextConsultationDate}
                         <br />
-                          <strong>Fecha:</strong>{" "}
-                        {consultation.date}
+                        <strong>Fecha:</strong> {consultation.date}
                         <br />
                         {consultation.image1 && (
                           <img
@@ -473,121 +483,148 @@ const UserPage = () => {
       </Offcanvas>
 
       {/* Modal para crear o editar consulta */}
-      <Modal show={showConsultationModal} onHide={() => setShowConsultationModal(false)}>
-  <Modal.Header closeButton>
-    <Modal.Title>
-      {isEditConsultationMode ? "Editar Consulta" : "Crear Consulta"}
-    </Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    <Form>
-      <Form.Group>
-        <Form.Label>Fecha</Form.Label>
-        <Form.Control
-          type="date"
-          value={newConsultation.date}
-          onChange={(e) =>
-            setNewConsultation({ ...newConsultation, date: e.target.value })
-          }
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Detalles</Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={3}
-          value={newConsultation.details}
-          onChange={(e) =>
-            setNewConsultation({ ...newConsultation, details: e.target.value })
-          }
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Tratamiento</Form.Label>
-        <Form.Control
-          type="text"
-          value={newConsultation.treatment}
-          onChange={(e) =>
-            setNewConsultation({ ...newConsultation, treatment: e.target.value })
-          }
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Monto Pagado</Form.Label>
-        <Form.Control
-          type="number"
-          value={newConsultation.amountPaid}
-          onChange={(e) =>
-            setNewConsultation({ ...newConsultation, amountPaid: e.target.value })
-          }
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Monto Pendiente</Form.Label>
-        <Form.Control
-          type="number"
-          value={newConsultation.pendingAmount}
-          onChange={(e) =>
-            setNewConsultation({ ...newConsultation, pendingAmount: e.target.value })
-          }
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Próxima Consulta</Form.Label>
-        <Form.Control
-          type="date"
-          value={newConsultation.nextConsultationDate}
-          onChange={(e) =>
-            setNewConsultation({ ...newConsultation, nextConsultationDate: e.target.value })
-          }
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Foto 1</Form.Label>
-        <Form.Control
-          type="file"
-          accept="image/*"
-          onChange={(e) =>
-            setNewConsultation({ ...newConsultation, image1: e.target.files[0] })
-          }
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Foto 2</Form.Label>
-        <Form.Control
-          type="file"
-          accept="image/*"
-          onChange={(e) =>
-            setNewConsultation({ ...newConsultation, image2: e.target.files[0] })
-          }
-        />
-      </Form.Group>
-      <Button
-        onClick={handleSaveConsultation}
-        className="mt-3"
-        variant="success"
-        disabled={isSaving} // Desactiva el botón mientras se está guardando
+      <Modal
+        show={showConsultationModal}
+        onHide={() => setShowConsultationModal(false)}
       >
-        {isSaving ? (
-          <>
-            <Spinner
-              as="span"
-              animation="border"
-              size="sm"
-              role="status"
-              aria-hidden="true"
-            />{" "}
-            Guardando...
-          </>
-        ) : isEditConsultationMode ? (
-          "Guardar Cambios"
-        ) : (
-          "Guardar Consulta"
-        )}
-      </Button>
-    </Form>
-  </Modal.Body>
-</Modal>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {isEditConsultationMode ? "Editar Consulta" : "Crear Consulta"}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group>
+              <Form.Label>Fecha</Form.Label>
+              <Form.Control
+                type="date"
+                value={newConsultation.date}
+                onChange={(e) =>
+                  setNewConsultation({
+                    ...newConsultation,
+                    date: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Detalles</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                value={newConsultation.details}
+                onChange={(e) =>
+                  setNewConsultation({
+                    ...newConsultation,
+                    details: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Tratamiento</Form.Label>
+              <Form.Control
+                type="text"
+                value={newConsultation.treatment}
+                onChange={(e) =>
+                  setNewConsultation({
+                    ...newConsultation,
+                    treatment: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Monto Pagado</Form.Label>
+              <Form.Control
+                type="number"
+                value={newConsultation.amountPaid}
+                onChange={(e) =>
+                  setNewConsultation({
+                    ...newConsultation,
+                    amountPaid: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Monto Pendiente</Form.Label>
+              <Form.Control
+                type="number"
+                value={newConsultation.pendingAmount}
+                onChange={(e) =>
+                  setNewConsultation({
+                    ...newConsultation,
+                    pendingAmount: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Próxima Consulta</Form.Label>
+              <Form.Control
+                type="date"
+                value={newConsultation.nextConsultationDate}
+                onChange={(e) =>
+                  setNewConsultation({
+                    ...newConsultation,
+                    nextConsultationDate: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Foto 1</Form.Label>
+              <Form.Control
+                type="file"
+                accept="image/*"
+                onChange={(e) =>
+                  setNewConsultation({
+                    ...newConsultation,
+                    image1: e.target.files[0],
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Foto 2</Form.Label>
+              <Form.Control
+                type="file"
+                accept="image/*"
+                onChange={(e) =>
+                  setNewConsultation({
+                    ...newConsultation,
+                    image2: e.target.files[0],
+                  })
+                }
+              />
+            </Form.Group>
+            <Button
+              onClick={handleSaveConsultation}
+              className="mt-3"
+              variant="success"
+              disabled={isSaving} // Desactiva el botón mientras se está guardando
+            >
+              {isSaving ? (
+                <>
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />{" "}
+                  Guardando...
+                </>
+              ) : isEditConsultationMode ? (
+                "Guardar Cambios"
+              ) : (
+                "Guardar Consulta"
+              )}
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
       {/* Modal para agregar o editar paciente */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
@@ -628,15 +665,15 @@ const UserPage = () => {
               />
             </Form.Group>
             <Form.Group>
-  <Form.Label>Correo Electrónico</Form.Label>
-  <Form.Control
-    type="email"
-    value={newPatient.email}
-    onChange={(e) =>
-      setNewPatient({ ...newPatient, email: e.target.value })
-    }
-  />
-</Form.Group>
+              <Form.Label>Correo Electrónico</Form.Label>
+              <Form.Control
+                type="email"
+                value={newPatient.email}
+                onChange={(e) =>
+                  setNewPatient({ ...newPatient, email: e.target.value })
+                }
+              />
+            </Form.Group>
             <Form.Group>
               <Form.Label>Teléfono</Form.Label>
               <Form.Control

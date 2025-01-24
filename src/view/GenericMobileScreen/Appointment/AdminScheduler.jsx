@@ -15,9 +15,10 @@ const AdminScheduler = ({domain}) => {
   const [reservationDetails, setReservationDetails] = useState(null);
   const [currentDayKey, setCurrentDayKey] = useState(null); // Nuevo estado para identificar el día actual
   const [isCancelling, setIsCancelling] = useState(false); 
+  const [isFetching, setIsFetching] = useState(false);
 
 
-  const hours = Array.from({ length: 12 }, (_, i) => `${9 + i}:00`);
+  const hours = Array.from({ length: 19 }, (_, i) => `${5 + i}:00`);
 
   const generateWeekDays = (date) => {
     const startOfWeek = new Date(date);
@@ -45,6 +46,8 @@ const AdminScheduler = ({domain}) => {
 
   const fetchSchedulerDays = async () => {
     setLoading(true);
+    setIsFetching(true); 
+
     try {
       const querySnapshot = await getDocs(collection(db, `applicationsBase/schedulers/${domain}`));
       const data = querySnapshot.docs.map((doc) => ({
@@ -61,6 +64,8 @@ const AdminScheduler = ({domain}) => {
       console.error("Error al cargar días de Scheduler:", error);
     } finally {
       setLoading(false);
+      setIsFetching(false); 
+
     }
   };
 
@@ -181,6 +186,30 @@ const AdminScheduler = ({domain}) => {
         value={selectedWeek}
         className="custom-calendar"
       />
+      <div style={{marginTop:"10px"}}/>
+       <Button
+        variant="primary"
+        onClick={() => {
+          fetchSchedulerDays();
+        }}
+        disabled={isFetching} // Desactiva el botón mientras está cargando
+      >
+        {isFetching ? (
+          <>
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+              className="me-2"
+            />
+            Actualizando...
+          </>
+        ) : (
+          "Actualizar Horarios"
+        )}
+      </Button>
     </div>
     {loading ? (
       <Spinner animation="border" className="loading-spinner" />

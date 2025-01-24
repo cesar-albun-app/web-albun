@@ -1,79 +1,204 @@
 /* Contenedor general */
 .scheduler-container {
-    padding: 20px;
-    background: linear-gradient(135deg, #e0c3fc, #8ec5fc); /* Manteniendo el fondo morado */
-    border-radius: 15px;
-    animation: fadeIn 0.8s ease-in-out;
+  padding: 20px;
+  background: linear-gradient(135deg, #e0c3fc, #8ec5fc); /* Manteniendo el fondo morado */
+  border-radius: 15px;
+  animation: fadeIn 0.8s ease-in-out;
+  position: relative;
+}
+
+/* Título del componente */
+.scheduler-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #4b0082; /* Morado oscuro para el título */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+/* Estilo para los Tabs */
+.custom-tabs .nav-tabs {
+  border-bottom: none;
+  justify-content: center;
+}
+
+.custom-tabs .nav-link {
+  color: #4b0082;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 30px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-tabs .nav-link.active {
+  background: linear-gradient(90deg, #4b0082, #6a0dad); /* Gradiente morado */
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.custom-tabs .nav-link:hover {
+  background: #f1e9fe;
+  color: #4b0082;
+  transform: translateY(-2px);
+}
+
+/* Contenido del Tab */
+.tab-content {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 0.8s ease-in-out;
+}
+
+/* Botón del menú lateral */
+.menu-toggle-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+/* Menú lateral */
+.side-menu {
+  position: fixed;
+  top: 100px;
+  right: -250px;
+  width: 250px;
+  height: 100%;
+  background: #4b0082;
+  color: #fff;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  transition: right 0.3s ease-in-out;
+  z-index: 5;
+}
+
+.side-menu.open {
+  right: 0;
+  top: 20px;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+}
+
+.menu-list li {
+  padding: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.menu-list li:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+/* Botón de hamburguesa */
+.menu-toggle-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 60px; /* Anchura más grande */
+  height: 30px; /* Ajusta la altura */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+/* Líneas del botón */
+.menu-toggle-button span {
+  display: block;
+  width: 100%; /* Abarca todo el ancho del contenedor */
+  height: 50px; /* Grosor de las barras */
+  background-color: #4b0082; /* Color del ícono */
+  border-radius: 2px; /* Bordes redondeados */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Efecto al abrir el menú */
+.menu-toggle-button.open span:nth-child(1) {
+  transform: translateY(10px) rotate(45deg); /* Rotar la barra superior */
+}
+
+.menu-toggle-button.open span:nth-child(2) {
+  opacity: 0; /* Ocultar la barra del medio */
+}
+
+.menu-toggle-button.open span:nth-child(3) {
+  transform: translateY(-10px) rotate(-45deg); /* Rotar la barra inferior */
+}
+
+/* Menú lateral */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -300px; /* Oculto por defecto */
+  width: 300px;
+  height: 100%;
+  background-color: #f8f9fa;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  transition: left 0.3s ease;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.side-menu.open {
+  left: 0; /* Menú visible */
+}
+
+/* Lista de opciones del menú */
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-list li {
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.menu-list li:hover {
+  color: #050109;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  /* Título del componente */
-  .scheduler-title {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #4b0082; /* Morado oscuro para el título */
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-    margin-bottom: 20px;
+  to {
+    opacity: 1;
   }
-  
-  /* Estilo para los Tabs */
-  .custom-tabs .nav-tabs {
-    border-bottom: none;
-    justify-content: center;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
   }
-  
-  .custom-tabs .nav-link {
-    color: #4b0082; /* Manteniendo el morado oscuro */
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    padding: 10px 20px;
-    margin: 0 5px;
-    border-radius: 30px;
-    background: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
-  
-  .custom-tabs .nav-link.active {
-    background: linear-gradient(90deg, #4b0082, #6a0dad); /* Gradiente morado */
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transform: translateY(-2px);
-  }
-  
-  .custom-tabs .nav-link:hover {
-    background: #f1e9fe; /* Ligero morado para hover */
-    color: #4b0082;
-    transform: translateY(-2px);
-  }
-  
-  /* Contenido del Tab */
-  .tab-content {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    animation: fadeInUp 0.8s ease-in-out;
-  }
-  
-  /* Animaciones */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
-  @keyframes fadeInUp {
-    from {
-      transform: translateY(20px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
+}

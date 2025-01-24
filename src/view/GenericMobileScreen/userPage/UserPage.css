@@ -1,0 +1,157 @@
+.patient-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .card-list {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 120px;
+    justify-content: center; /* Asegura que las tarjetas se centren */
+  }
+  
+  .patient-card {
+    width: 100%;
+    max-width: 320px; /* Tamaño máximo de cada tarjeta */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center; /* Centrar contenido dentro de la tarjeta */
+  }
+  
+  .patient-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .patient-card img {
+    object-fit: cover;
+    height: 120px; /* Tamaño del círculo */
+    width: 120px;
+    border-radius: 50%; /* Hacer la imagen circular */
+    margin: 20px auto; /* Centrar la imagen horizontal y con espacio superior */
+    display: block; /* Asegurar que la imagen respete el margen */
+    border: 3px solid #ccc; /* Opcional: añadir un borde alrededor de la imagen */
+  }
+  
+  .card-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  
+  @media (max-width: 768px) {
+    .patient-card {
+      width: 90%; /* Tamaño adaptado para pantallas pequeñas */
+      margin: 0 auto; /* Centrar la tarjeta horizontalmente */
+    }
+  
+    .card-list {
+      justify-content: center; /* Asegurar centrado en dispositivos móviles */
+    }
+  }
+  .offcanvas .nav-link {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  
+  .offcanvas .nav-link:hover {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+  }
+
+  .menu-button {
+    position: fixed;
+    bottom: 20px; /* Distancia desde la parte inferior */
+    left: 20px; /* Distancia desde la parte izquierda */
+    z-index: 1000; /* Asegura que el botón esté siempre visible */
+  }
+  
+ 
+  .hamburger-button:hover {
+    transform: scale(1.1); /* Agrandar ligeramente al pasar el cursor */
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15); /* Aumentar la sombra */
+  }
+  .menu-icon {
+    position: fixed;
+    top: 20px; /* Distancia desde la parte superior */
+    left: 20px; /* Distancia desde la parte izquierda */
+    z-index: 1000; /* Asegura que esté siempre encima */
+  }
+  
+  .hamburger-button {
+    background-color: #fff; /* Fondo blanco */
+    border: 1px solid #ddd; /* Borde ligero */
+    border-radius: 50%; /* Forma circular */
+    padding: 8px; /* Tamaño interno del botón */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .hamburger-button:hover {
+    transform: scale(1.1); /* Ampliar ligeramente al pasar el cursor */
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15); /* Sombra más marcada */
+  }
+  /* Contenedor de la tabla */
+.patient-table-container {
+    padding: 20px;
+    background-color: #f8f9fa; /* Fondo claro */
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Sombra elegante */
+    max-width: 1200px;
+    margin: 20px auto;
+  }
+  
+  /* Estilo para la tabla */
+  .patient-table {
+    font-size: 16px;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+  }
+  
+  .patient-table th {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+  }
+  
+  .patient-table td {
+    text-align: center;
+    vertical-align: middle;
+    background-color: white;
+    padding: 15px;
+    border: 1px solid #dee2e6;
+  }
+  
+  /* Imagen en la tabla */
+  .patient-image {
+    width: 120px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra en la imagen */
+  }
+  
+  /* Botones de acción */
+  .action-buttons .btn {
+    margin-right: 5px;
+  }
+  
+  /* Resalta la fila al pasar el mouse */
+  .patient-table tr:hover {
+    background-color: #f1f1f1;
+    transition: background-color 0.3s ease;
+  }.justified-text {
+    text-align: justify;
+    white-space: pre-wrap; /* Mantiene los saltos de línea si existen */
+    word-wrap: break-word; /* Evita que palabras largas excedan el ancho del contenedor */
+  }

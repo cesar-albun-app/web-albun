@@ -129,7 +129,7 @@ const RequestedTurns = ({domain})  => {
       ) : (
         <>
           {/* Filtro por Estado */}
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-2 small-select">
             <Form.Label>Filtrar por Estado</Form.Label>
             <Form.Select
               value={filterStatus}
@@ -143,27 +143,27 @@ const RequestedTurns = ({domain})  => {
           </Form.Group>
 
           {/* Filtro por Mes */}
-          <Form.Group className="mb-3">
-            <Form.Label>Filtrar por Mes</Form.Label>
-            <Form.Select
-              value={filterMonth}
-              onChange={(e) => setFilterMonth(e.target.value)}
-            >
-              <option value="all">Todos</option>
-              <option value="1">Enero</option>
-              <option value="2">Febrero</option>
-              <option value="3">Marzo</option>
-              <option value="4">Abril</option>
-              <option value="5">Mayo</option>
-              <option value="6">Junio</option>
-              <option value="7">Julio</option>
-              <option value="8">Agosto</option>
-              <option value="9">Septiembre</option>
-              <option value="10">Octubre</option>
-              <option value="11">Noviembre</option>
-              <option value="12">Diciembre</option>
-            </Form.Select>
-          </Form.Group>
+          <Form.Group className="mb-2 small-select">
+          <Form.Label>Filtrar por Mes</Form.Label>
+              <Form.Select
+                value={filterMonth}
+                onChange={(e) => setFilterMonth(e.target.value)}
+              >
+                <option value="all">Todos</option>
+                <option value="1">Enero</option>
+                <option value="2">Febrero</option>
+                <option value="3">Marzo</option>
+                <option value="4">Abril</option>
+                <option value="5">Mayo</option>
+                <option value="6">Junio</option>
+                <option value="7">Julio</option>
+                <option value="8">Agosto</option>
+                <option value="9">Septiembre</option>
+                <option value="10">Octubre</option>
+                <option value="11">Noviembre</option>
+                <option value="12">Diciembre</option>
+              </Form.Select>
+            </Form.Group>
 
           {filteredTurns.length > 0 ? (
          <Table bordered hover responsive className="modern-table">

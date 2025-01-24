@@ -275,3 +275,21 @@
     font-size: 0.95rem;
     color: #343a40;
   }
+  /* Clase personalizada para reducir el tamaño del Form.Group */
+.small-select {
+  max-width: 300px; /* Ajusta el ancho máximo */
+  font-size: 14px; /* Reduce el tamaño del texto */
+}
+
+/* Ajusta el tamaño del select */
+.small-select select {
+  font-size: 12px; /* Reduce el tamaño del texto en el select */
+  height: 30px; /* Ajusta la altura del select */
+  padding: 2px 5px; /* Reduce el espacio interno */
+}
+
+/* Ajusta el tamaño del label */
+.small-select label {
+  font-size: 12px; /* Reduce el tamaño del texto en el label */
+  margin-bottom: 4px; /* Reduce el margen inferior */
+}
