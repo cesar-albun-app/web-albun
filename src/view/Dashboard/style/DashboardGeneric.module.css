@@ -96,6 +96,14 @@
   background-color: #28a745;
   color: #fff;
 }
+.blackCard {
+  background-color: #070807;
+  color: #fff;
+}
+.blackBtn {
+  background-color: #fff;
+  color:  #070807;
+}
 
 .greenCard .dashboardIcon {
   color: #fff;

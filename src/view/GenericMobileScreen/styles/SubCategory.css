@@ -1,0 +1,191 @@
+.container-custom {
+    background-color: #000; /* Fondo negro */
+    color: #fff; /* Texto blanco para contraste */
+    border-radius: 10px; /* Esquinas redondeadas */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Elevación */
+    padding: 20px; /* Espaciado interno */
+  }
+  h4 {
+    color: #fff;
+  }
+  
+  .category-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .category-button {
+    width: 100%; /* Ancho completo */
+    max-width: 400px; /* Ancho máximo */
+    padding: 15px;
+    font-size: 1.2rem;
+    border: 2px solid #fff;
+    color: #fff;
+    background-color: transparent;
+    text-align: center;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .category-button:hover {
+    background-color: #fff;
+    color: #000;
+    border-color: #fff;
+  }
+  .container-custom {
+  background-color: #575656; /* Fondo negro */
+  color: #fff; /* Texto blanco */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+}
+
+.logo {
+  width: 100px; /* Tamaño del logo */
+  height: auto;
+  border-radius: 50%; /* Opcional: redondear el logo */
+}
+
+h1 {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+
+.category-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.category-button {
+  width: 100%; /* Ancho completo */
+  max-width: 400px; /* Ancho máximo */
+  padding: 15px;
+  font-size: 1.2rem;
+  border: 2px solid #fff;
+  color: #fff;
+  background-color: transparent;
+  text-align: center;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.category-button:hover {
+  background-color: #fff;
+  color: #000;
+  border-color: #fff;
+}
+
+.logo {
+    width: 80px; /* Tamaño más pequeño */
+    height: 80px;
+    border-radius: 50%; /* Redondeado */
+    object-fit: cover; /* Para que la imagen se ajuste al espacio */
+    margin-bottom: 10px;
+  }
+  
+  .title-input {
+    background: transparent; /* Fondo transparente */
+    color: #fff; /* Texto blanco */
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .title-input:focus {
+    outline: none;
+    box-shadow: none;
+    border-bottom: 2px solid #fff; /* Línea inferior al editar */
+  }
+  
+  .category-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .category-button {
+    width: 100%; /* Ancho completo */
+    max-width: 300px; /* Ancho máximo */
+    padding: 10px;
+    font-size: 1.1rem;
+    border: 2px solid #fff;
+    color: #fff;
+    background-color: transparent;
+    text-align: center;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .category-button:hover {
+    background-color: #fff;
+    color: #000;
+    border-color: #fff;
+  }
+  .logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  .logo-preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  .title-input {
+    background: transparent;
+    color: #fff;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .menu-title-preview {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #333;
+  }
+  
+  .category-preview {
+    margin-top: 20px;
+  }
+  
+  .preview-category-button {
+    width: 80%;
+    max-width: 300px;
+    margin: 5px 0;
+    font-size: 1.2rem;
+    border: 1px solid #333;
+    color: #333;
+    background-color: transparent;
+    border-radius: 8px;
+  }
+  .preview-category-button {
+    transition: all 0.3s ease-in-out;
+    border-radius: 5px;
+  }
+  
+  .preview-category-button.hover-effect:hover {
+    background-color: #fff !important; /* Cambia a blanco */
+    color: #000 !important; /* Cambia el texto a negro */
+    transform: scale(1.05); /* Efecto de aumento */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra al pasar el mouse */
+  }

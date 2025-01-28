@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Button, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FaUpload, FaGlobe, FaCalendarAlt,FaUserAlt } from "react-icons/fa";
+import { FaUpload, FaGlobe, FaCalendarAlt,FaUserAlt,FaMagento } from "react-icons/fa";
 import styles from "./style/DashboardGeneric.module.css"; // Importar estilos como módulo CSS
 
 export default function DashboardGeneric({ domain }) {
@@ -65,6 +65,21 @@ export default function DashboardGeneric({ domain }) {
               to="/userAccount"
             >
               Pacientes
+            </Button>
+          </Card.Body>
+        </Card>
+      </Col>
+      <Col md={4} className={`mb-4 ${styles.cardCol}`}>
+        <Card className={`${styles.dashboardCard} ${styles.blackCard}`}>
+          <Card.Body className="d-flex flex-column justify-content-center align-items-center">
+          <FaMagento size={40} className="mb-3" style={{ color: "red" }} />
+          <h6 className={styles.dashboardTitle}>Gestionar Menu </h6>
+            <Button
+              className={`${styles.dashboardButton} ${styles.blackBtn}`}
+              as={Link}
+              to="/dashboardMenu"
+            >
+              Menu
             </Button>
           </Card.Body>
         </Card>
