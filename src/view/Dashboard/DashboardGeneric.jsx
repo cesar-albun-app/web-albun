@@ -74,14 +74,27 @@ export default function DashboardGeneric({ domain }) {
           <Card.Body className="d-flex flex-column justify-content-center align-items-center">
           <FaMagento size={40} className="mb-3" style={{ color: "red" }} />
           <h6 className={styles.dashboardTitle}>Gestionar Menu </h6>
+          <div style={{flexDirection:'row'}}>
             <Button
               className={`${styles.dashboardButton} ${styles.blackBtn}`}
               as={Link}
               to="/dashboardMenu"
             >
-              Menu
+              Modificar Menu
             </Button>
+       
+            <Button
+              className={`${styles.dashboardButton} ${styles.blackBtn}`}
+              as={Link}
+              to={`/menu/${domain}`}            >
+              Ingresar a tu Menu
+            </Button>
+            </div>
+           
           </Card.Body>
+
+
+          
         </Card>
       </Col>
 

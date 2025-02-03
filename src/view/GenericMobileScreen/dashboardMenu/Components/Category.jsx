@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
 import "../../styles/SubCategory.css";
 
-const Category = ({categories, setCategories,menuTitle,setMenuTitle, logoUrl,setLogoUrl,
+const Category = ({categories, setCategories,menuTitle,setMenuTitle, logoUrl,setLogoUrl,handleLogoChange,
   previewButtonColor, setPreviewButtonColor,previewBackgroundColor, setPreviewBackgroundColor,previewTextColor, setPreviewTextColor,colorBtText, setColorBtText
 }) => {
   const [category, setCategory] = useState("");
@@ -32,12 +32,7 @@ const Category = ({categories, setCategories,menuTitle,setMenuTitle, logoUrl,set
     setCategories(filteredCategories);
   };
 
-  // Función para cambiar el logo
-  const handleLogoChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setLogoUrl(URL.createObjectURL(e.target.files[0]));
-    }
-  };
+;
 
   // Función para abrir/cerrar la vista previa
   const togglePreview = () => setShowPreview(!showPreview);

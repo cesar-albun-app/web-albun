@@ -16,7 +16,8 @@ export default function DashboardMenu(userData) {
   const [menuTitle, setMenuTitle] = useState(
     "Ingresa el título principal del menú aquí"
   );
-  const [logoUrl, setLogoUrl] = useState("https://via.placeholder.com/100");
+  const [logoUrl, setLogoUrl] = useState(null);
+  console.log("logoUrl: ", logoUrl);
   const [previewButtonColor, setPreviewButtonColor] = useState("#007bff");
   const [previewBackgroundColor, setPreviewBackgroundColor] = useState("#000");
   const [previewTextColor, setPreviewTextColor] = useState("#fff");
@@ -35,23 +36,34 @@ export default function DashboardMenu(userData) {
     try {
       setIsSaving(true);
       let logoDownloadUrl = logoUrl;
-
+  
       // Subir logo al almacenamiento si se seleccionó un archivo
       if (logoFile) {
-        const storageRef = ref(storage, `menus/logo`);
-        await uploadBytes(storageRef, logoFile);
-        logoDownloadUrl = await getDownloadURL(storageRef);
+        console.log("📌 Archivo a subir:", logoFile);
+  
+        try {
+          // ✅ Ruta Correcta en Firebase Storage
+          const storageRef = ref(storage, `menu/${domain}/logo_${Date.now()}`);
+  
+          // ✅ Subir la imagen
+          const snapshot = await uploadBytes(storageRef, logoFile);
+  
+          // ✅ Obtener la URL pública
+          logoDownloadUrl = await getDownloadURL(snapshot.ref);
+          console.log("✅ URL pública obtenida:", logoDownloadUrl);
+  
+        } catch (error) {
+          console.error("❌ Error al subir el archivo a Firebase Storage:", error);
+          alert("Error subiendo la imagen");
+          return; // Detener la ejecución si hay un error
+        }
       }
-
-      const patientsCollection = collection(
-        db,
-        `applicationsBase/menu/${domain}`
-      );
-      const docRef = doc(patientsCollection, "defaultMenu");
-
+  
+      // ✅ Guardar datos en Firestore
+      const docRef = doc(db, `applicationsBase/menu/${domain}`, "defaultMenu");
       await setDoc(docRef, {
         menuTitle,
-        logoUrl: logoDownloadUrl,
+        logoUrl: logoDownloadUrl, // ✅ Guardamos la URL de Firebase
         previewButtonColor,
         previewBackgroundColor,
         previewTextColor,
@@ -59,8 +71,8 @@ export default function DashboardMenu(userData) {
         categories,
         articles,
       });
-
-      alert("Carta guardada exitosamente en Firebase.");
+  
+      alert("🎉 Carta guardada exitosamente.");
       setInitialData({
         menuTitle,
         logoUrl: logoDownloadUrl,
@@ -70,11 +82,12 @@ export default function DashboardMenu(userData) {
         colorBtText,
         categories,
         articles,
-      }); // Actualizar datos iniciales después de guardar
+      }); // ✅ Actualizar estado inicial después de guardar
       setHasChanges(false);
+  
     } catch (error) {
-      console.error("Error guardando la carta: ", error);
-      alert("Error guardando la carta. Revisa la consola para más detalles.");
+      console.error("❌ Error guardando la carta en Firestore:", error);
+      alert("Error guardando la carta");
     } finally {
       setIsSaving(false);
     }
@@ -106,7 +119,7 @@ export default function DashboardMenu(userData) {
       }
     } catch (error) {
       console.error("Error recuperando la carta: ", error);
-      alert("Error cargando la carta. Revisa la consola para más detalles.");
+      alert("Error cargando la carta");
     }
   };
 
@@ -138,8 +151,8 @@ export default function DashboardMenu(userData) {
   const handleLogoChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      setLogoFile(file);
-      setLogoUrl(URL.createObjectURL(file)); // Mostrar vista previa
+      setLogoFile(file); // ✅ Guardamos el archivo para subirlo después
+      setLogoUrl(URL.createObjectURL(file)); // ✅ Mostrar previsualización temporal
       setHasChanges(true);
     }
   };
@@ -149,8 +162,7 @@ export default function DashboardMenu(userData) {
   }, []);
 
   return (
-    <Container className="mt-4">
-      <h1 className="text-center mb-4">Dashboard</h1>
+    <Container className="mt-0">
       <Row>
         <Category
           logoUrl={logoUrl}
@@ -167,7 +179,7 @@ export default function DashboardMenu(userData) {
           setMenuTitle={setMenuTitle}
           categories={categories}
           setCategories={setCategories}
-          onLogoChange={handleLogoChange}
+          handleLogoChange={handleLogoChange}
         />
         <ArticleManager
           articles={articles}

@@ -46,6 +46,7 @@
   padding: 10px 20px;
   font-size: 0.9rem;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-left: 10px;
 }
 
 .dashboardButton:hover {
