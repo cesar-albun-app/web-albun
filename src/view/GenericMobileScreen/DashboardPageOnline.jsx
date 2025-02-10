@@ -4,10 +4,12 @@ import { FaArrowLeft, FaCalendarAlt, FaShoppingBag } from "react-icons/fa";
 import GenericMobileScreen from "./GenericMobileScreen";
 import UserScheduler from "./Appointment/UserScheduler";
 import './styles/DashboardPageOnline.css';
-
+import { RolesUser } from "../../constants/constants";
 
 export default function DashboardPageOnline({ userData }) {
   const [isRouterState, setIsRouterState] = useState(null);
+    const userType = userData?.profileType  === RolesUser.EMP ? true : false;
+
 
   const cardStyles = {
     border: "none",
@@ -41,6 +43,7 @@ export default function DashboardPageOnline({ userData }) {
         <Container>
           <Row className="g-4 dashboard-cards">
             {/* Card 1 */}
+            {userType &&
             <Col xs={12} md={6}>
               <Card className="dashboard-card purple-card">
                 <Card.Body>
@@ -55,8 +58,9 @@ export default function DashboardPageOnline({ userData }) {
                 </Card.Body>
               </Card>
             </Col>
-
+          }
             {/* Card 2 */}
+            {!userType &&
             <Col xs={12} md={6}>
               <Card className="dashboard-card blue-card">
                 <Card.Body>
@@ -71,6 +75,7 @@ export default function DashboardPageOnline({ userData }) {
                 </Card.Body>
               </Card>
             </Col>
+             }
           </Row>
         </Container>
       ) : isRouterState ? (

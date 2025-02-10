@@ -46,6 +46,7 @@
   padding: 10px 20px;
   font-size: 0.9rem;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-left: 10px;
 }
 
 .dashboardButton:hover {
@@ -95,6 +96,14 @@
 .greenCard {
   background-color: #28a745;
   color: #fff;
+}
+.blackCard {
+  background-color: #070807;
+  color: #fff;
+}
+.blackBtn {
+  background-color: #fff;
+  color:  #070807;
 }
 
 .greenCard .dashboardIcon {

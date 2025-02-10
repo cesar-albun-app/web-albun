@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { Roles } from "../../constants/constants";
+import { Roles,RolesUser } from "../../constants/constants";
 import DashboardKarla from "./DashboardKarla";
 import DashboaDubia from "./DashboaDubia";
 import DashboardGeneric from "./DashboardGeneric";
@@ -18,6 +18,9 @@ import DashboardGeneric from "./DashboardGeneric";
 function Dashboard(userData) {
 
   const domain = userData?.userData?.domain || ""; // Valor predeterminado vacío
+
+  const userType = userData?.userData?.profileType  === RolesUser.EMP ? true : false;
+  
 
   const { logout, userRole, currentUser } = useAuth();
   const navigate = useNavigate();
@@ -117,7 +120,7 @@ function Dashboard(userData) {
     {(userRole === Roles.ADMIN || userRole === Roles.DRS) && <DashboardKarla />}
 
     {(userRole === Roles.ADMIN || userRole === Roles.USER) && (
-      <DashboardGeneric domain={domain} />
+      <DashboardGeneric userType={userType} domain={domain} />
     )}
   </Row>
 </Container>
