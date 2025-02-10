@@ -343,7 +343,6 @@ const UserPage = () => {
           <Nav className="flex-column">
             <Nav.Link href="/scheduler">Turnos</Nav.Link>
             <Nav.Link href="/docKarla">Mi Tienda</Nav.Link>
-            <Nav.Link href="/karlaScreem">Cragar Productos</Nav.Link>
             <Nav.Link href="/dashboard">Salir</Nav.Link>
           </Nav>
         </Offcanvas.Body>

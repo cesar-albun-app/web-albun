@@ -23,7 +23,10 @@ const ConfirmationModal = ({ show, setShow }) => {
     >
       <Modal.Body className="text-center">
         <BsCheckCircle style={{ fontSize: "5rem", color: "green" }} />
-        <h4 className="mt-3">¡Solicitud Confirmada!</h4>
+        <h4
+        
+        style={{  color: "black" }} 
+        className="mt-3">¡Solicitud Confirmada!</h4>
       </Modal.Body>
     </Modal>
   );

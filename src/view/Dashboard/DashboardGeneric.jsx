@@ -1,27 +1,57 @@
 import React from "react";
 import { Card, Button, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FaUpload, FaGlobe, FaCalendarAlt,FaUserAlt,FaMagento } from "react-icons/fa";
+import {
+  FaUpload,
+  FaGlobe,
+  FaCalendarAlt,
+  FaUserAlt,
+  FaMagento,
+} from "react-icons/fa";
 import styles from "./style/DashboardGeneric.module.css"; // Importar estilos como módulo CSS
 
-export default function DashboardGeneric({ domain }) {
+export default function DashboardGeneric({ domain, userType }) {
   return (
     <>
-      <Col md={4} className={`mb-4 ${styles.cardCol}`}>
-        <Card className={`${styles.dashboardCard} ${styles.yellowCard}`}>
-          <Card.Body className="d-flex flex-column justify-content-center align-items-center">
-            <FaUpload size={40} className={styles.dashboardIcon} />
-            <h6 className={styles.dashboardTitle}>Carga Productos</h6>
-            <Button
-              className={`${styles.dashboardButton} ${styles.yellowButton}`}
-              as={Link}
-              to="/genericRoute"
-            >
-              Cargar
-            </Button>
-          </Card.Body>
-        </Card>
-      </Col>
+      {!userType && (
+        <>
+          <Col md={4} className={`mb-4 ${styles.cardCol}`}>
+            <Card className={`${styles.dashboardCard} ${styles.greenCard}`}>
+              <Card.Body className="d-flex flex-column justify-content-center align-items-center">
+                <FaCalendarAlt size={40} className={styles.dashboardIcon} />
+                <h6 className={styles.dashboardTitle}>Gestiona Tu Agenda</h6>
+                <Button
+                  className={`${styles.dashboardButton} ${styles.greenButton}`}
+                  as={Link}
+                  to="/schedulerGeneric"
+                >
+                  Agenda
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+
+          <Col md={4} className={`mb-4 ${styles.cardCol}`}>
+            <Card className={`${styles.dashboardCard} ${styles.greenCard}`}>
+              <Card.Body className="d-flex flex-column justify-content-center align-items-center">
+                <FaUserAlt
+                  size={40}
+                  className="mb-3"
+                  style={{ color: "#fff" }}
+                />
+                <h6 className={styles.dashboardTitle}>Agenda de Pacientes</h6>
+                <Button
+                  className={`${styles.dashboardButton} ${styles.greenButton}`}
+                  as={Link}
+                  to="/userAccount"
+                >
+                  Pacientes
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+        </>
+      )}
 
       <Col md={4} className={`mb-8 ${styles.cardCol}`}>
         <Card className={`${styles.dashboardCard} ${styles.blueCard}`}>
@@ -39,67 +69,55 @@ export default function DashboardGeneric({ domain }) {
         </Card>
       </Col>
 
-      <Col md={4} className={`mb-4 ${styles.cardCol}`}>
-        <Card className={`${styles.dashboardCard} ${styles.greenCard}`}>
-          <Card.Body className="d-flex flex-column justify-content-center align-items-center">
-            <FaCalendarAlt size={40} className={styles.dashboardIcon} />
-            <h6 className={styles.dashboardTitle}>Gestiona Tu Agenda</h6>
-            <Button
-              className={`${styles.dashboardButton} ${styles.greenButton}`}
-              as={Link}
-              to="/schedulerGeneric"
-            >
-              Agenda
-            </Button>
-          </Card.Body>
-        </Card>
-      </Col>
-      <Col md={4} className={`mb-4 ${styles.cardCol}`}>
-        <Card className={`${styles.dashboardCard} ${styles.greenCard}`}>
-          <Card.Body className="d-flex flex-column justify-content-center align-items-center">
-          <FaUserAlt size={40} className="mb-3" style={{ color: "#fff" }} />
-          <h6 className={styles.dashboardTitle}>Agenda de Pacientes</h6>
-            <Button
-              className={`${styles.dashboardButton} ${styles.greenButton}`}
-              as={Link}
-              to="/userAccount"
-            >
-              Pacientes
-            </Button>
-          </Card.Body>
-        </Card>
-      </Col>
-      <Col md={4} className={`mb-4 ${styles.cardCol}`}>
-        <Card className={`${styles.dashboardCard} ${styles.blackCard}`}>
-          <Card.Body className="d-flex flex-column justify-content-center align-items-center">
-          <FaMagento size={40} className="mb-3" style={{ color: "red" }} />
-          <h6 className={styles.dashboardTitle}>Gestionar Menu </h6>
-          <div style={{flexDirection:'row'}}>
-            <Button
-              className={`${styles.dashboardButton} ${styles.blackBtn}`}
-              as={Link}
-              to="/dashboardMenu"
-            >
-              Modificar Menu
-            </Button>
-       
-            <Button
-              className={`${styles.dashboardButton} ${styles.blackBtn}`}
-              as={Link}
-              to={`/menu/${domain}`}            >
-              Ingresar a tu Menu
-            </Button>
-            </div>
-           
-          </Card.Body>
+      {userType && (
+        <>
+          <Col md={4} className={`mb-4 ${styles.cardCol}`}>
+            <Card className={`${styles.dashboardCard} ${styles.yellowCard}`}>
+              <Card.Body className="d-flex flex-column justify-content-center align-items-center">
+                <FaUpload size={40} className={styles.dashboardIcon} />
+                <h6 className={styles.dashboardTitle}>Carga Productos</h6>
+                <Button
+                  className={`${styles.dashboardButton} ${styles.yellowButton}`}
+                  as={Link}
+                  to="/genericRoute"
+                >
+                  Cargar
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
 
+          <Col md={4} className={`mb-4 ${styles.cardCol}`}>
+            <Card className={`${styles.dashboardCard} ${styles.blackCard}`}>
+              <Card.Body className="d-flex flex-column justify-content-center align-items-center">
+                <FaMagento
+                  size={40}
+                  className="mb-3"
+                  style={{ color: "red" }}
+                />
+                <h6 className={styles.dashboardTitle}>Gestionar Menu </h6>
+                <div style={{ flexDirection: "row" }}>
+                  <Button
+                    className={`${styles.dashboardButton} ${styles.blackBtn}`}
+                    as={Link}
+                    to="/dashboardMenu"
+                  >
+                    Modificar Menu
+                  </Button>
 
-          
-        </Card>
-      </Col>
-
-      
+                  <Button
+                    className={`${styles.dashboardButton} ${styles.blackBtn}`}
+                    as={Link}
+                    to={`/menu/${domain}`}
+                  >
+                    Ingresar a tu Menu
+                  </Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </>
+      )}
     </>
   );
 }
-

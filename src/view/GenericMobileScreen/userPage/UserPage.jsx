@@ -350,9 +350,8 @@ const UserPage = (userData) => {
         <Offcanvas.Body>
           <Nav className="flex-column">
             <Nav.Link href="/schedulerGeneric">Turnos</Nav.Link>
-            <Nav.Link href={`/${domain}`}>Mi Tienda</Nav.Link>            
-            <Nav.Link href="/genericRoute">Cragar Productos</Nav.Link>
-            <Nav.Link href="/dashboard">Salir</Nav.Link>
+            <Nav.Link href={`/${domain}`}>Mi web</Nav.Link>            
+            <Nav.Link href="/dashboard">Volver al inicio</Nav.Link>
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>

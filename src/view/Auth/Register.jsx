@@ -18,6 +18,8 @@ const RegisterForm = () => {
     domain: "",
     primaryColor: "#000000",
     secondaryColor: "#ffffff",
+    profileType: "EMP", // "EMP" por defecto (Emprendimiento)
+
   });
   const [previewLogo, setPreviewLogo] = useState(null); // Vista previa del logo
   const [loading, setLoading] = useState(false);
@@ -114,6 +116,8 @@ const RegisterForm = () => {
         secondaryColor: formData.secondaryColor,
         logo: logoUrl,
         createdAt: new Date(),
+        profileType: formData.profileType, // Guardar como "EMP" o "SAL"
+
       });
   
       // Crear una referencia a la subcolección "orders"
@@ -234,6 +238,7 @@ const RegisterForm = () => {
                 />
               </Col>
             </Row>
+
             <Form.Group className="mb-3">
               <Form.Label>Imagen de Perfil (Logo)</Form.Label>
               {previewLogo && (
@@ -251,6 +256,19 @@ const RegisterForm = () => {
                 className="register-input"
               />
             </Form.Group>
+            <Form.Group className="mb-3">
+  <Form.Label>Selecciona tu perfil</Form.Label>
+  <Form.Select
+    name="profileType"
+    value={formData.profileType}
+    onChange={handleChange}
+    className="register-input"
+    required
+  >
+    <option value="EMP">Tengo un Emprendimiento</option>
+    <option value="SAL">Soy Personal de Salud</option>
+  </Form.Select>
+</Form.Group>
             <Button type="submit" className="register-button" disabled={loading}>
               {loading ? <Spinner animation="border" size="sm" /> : "Registrarse"}
             </Button>

@@ -180,7 +180,7 @@ const AdminScheduler = ({domain}) => {
   return (
     <>
     <div className="scheduler-header">
-      <h4>Gestionar Turnos</h4>
+      <h4    style={{  color: "black" }} >Gestionar Turnos</h4>
       <Calendar
         onChange={(date) => setSelectedWeek(date)}
         value={selectedWeek}
