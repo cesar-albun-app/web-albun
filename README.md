@@ -79,7 +79,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 - yarn run build  
 - - cdeploy : 
 - yarn firebase deploy
-- firebase projects:list
+- yarn firebase projects:list
 - ### PAGINAS
 - DUBIA
 - https://albun-app.web.app/dubiaVentas
